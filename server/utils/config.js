@@ -1,4 +1,5 @@
 require("dotenv").config()
+const common = require('@root/config/common')
 
 const PORT = process.env.PORT || 3003
 const MONGO_URL =
@@ -6,4 +7,4 @@ const MONGO_URL =
     ? process.env.TEST_MONGODB_URI
     : process.env.MONGODB_URI
 
-module.exports = { PORT, MONGO_URL }
+module.exports = { ...common, PORT, MONGO_URL }
