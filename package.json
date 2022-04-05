@@ -4,9 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=production node index.js",
-    "dev": "NODE_ENV=development nodemon index.js",
-	"build": "webpack --mode=production",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "build": "webpack --mode=production",
     "deploy": "git push heroku main",
     "logs:prod": "heroku logs --tail",
     "lint": "eslint .",
@@ -44,6 +44,7 @@
   "devDependencies": {
     "@babel/polyfill": "^7.12.1",
     "babel-loader": "^8.2.4",
+    "cross-env": "^7.0.3",
     "cypress": "^9.2.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-jest": "^25.3.2",
