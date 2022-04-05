@@ -10,25 +10,79 @@
     "logs:prod": "heroku logs --tail",
     "lint": "eslint .",
     "test": "NODE_ENV=test jest --verbose --runInBand",
-	"start:test": "NODE_ENV=test node index.js"
+    "start:test": "NODE_ENV=test node index.js",
+    "fe.start": "react-scripts start",
+    "fe.build": "react-scripts build",
+    "fe.test": "react-scripts test",
+    "fe.eject": "react-scripts eject",
+    "fe.server": "json-server -p3001 db.json",
+    "fe.eslint": "eslint .",
+    "fe.cypress:open": "cypress open",
+    "fe.test:e2e": "cypress run"
   },
   "dependencies": {
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^12.6.3",
+    "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
     "mongoose": "^6.1.2",
-    "mongoose-unique-validator": "^3.0.0"
+    "mongoose-unique-validator": "^3.0.0",
+    "prop-types": "^15.8.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.1",
+    "web-vitals": "^0.2.4"
   },
   "devDependencies": {
+    "cypress": "^9.2.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-jest": "^25.3.2",
     "jest": "^27.4.5",
     "lodash": "^4.17.21",
     "nodemon": "^2.0.15",
+    "react-error-overlay": "^6.0.10",
     "supertest": "^6.1.6"
   },
   "jest": {
     "testEnvironment": "node"
-  }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "dist/*",
+      "client/*",
+      "server/*"
+    ]
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@controllers": "server/controllers",
+    "@models": "server/models",
+    "@utils": "server/utils"
+  },
+  "proxy": "http://localhost:3003"
 }
