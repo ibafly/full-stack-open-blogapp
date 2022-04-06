@@ -96,6 +96,5 @@
     "@controllers": "server/controllers",
     "@models": "server/models",
     "@utils": "server/utils"
-  },
-  "proxy": "http://localhost:3003"
+  }
 }
