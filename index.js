@@ -1,13 +1,31 @@
 require("module-alias/register") // active module-alias
 //const config = require("./utils/config")
 const config = require("@utils/config")
+const chokidar = require("chokidar")
 const express = require("express")
-const app = require("./server/index")
+//const app = require("./server/index")
 const path = require("path")
 const http = require("http")
 //const logger = require("./utils/logger")
 const logger = require("@utils/logger")
 
+const app = express()
+// Require is here so we can delete it from cache when files change (*)
+app.use('/api', (req, res, next) => require('@root/server')(req, res, next)) // eslint-disable-line
+
+/**
+ *  Use "hot loading" in backend
+ */
+const watcher = chokidar.watch('server', {
+	ignored: 'server/models/**'
+}) // Watch server folder
+watcher.on('ready', () => {
+  watcher.on('all', () => {
+    Object.keys(require.cache).forEach((id) => {
+      if (id.includes('server')) delete require.cache[id] // Delete all require caches that point to server folder (*)
+    })
+  })
+})
 
 /**
  * For frontend use hot loading when in development, else serve the static content

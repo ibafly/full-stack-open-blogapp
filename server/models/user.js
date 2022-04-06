@@ -24,4 +24,12 @@ userSchema.set("toJSON", {
   },
 })
 
-module.exports = mongoose.model("User", userSchema)
+//module.exports = mongoose.model("User", userSchema)
+module.exports = mongoose.models.User || mongoose.model("User", userSchema);
+
+
+
+// *** This fixed my error. ***
+// Ensure when creating the model, the name is capitalized like so "User"
+// module.exports = mongoose.models.Users || mongoose.model("User", UserSchema);
+
