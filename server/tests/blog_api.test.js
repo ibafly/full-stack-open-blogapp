@@ -15,7 +15,7 @@ beforeEach(async () => {
   await Blog.insertMany(helper.initialBlogs)
   await User.deleteMany({})
   await User.insertMany(helper.initialOneRootUser)
-}, 1000000)
+}, 100000)
 
 describe("initial blogs", () => {
   test("are returned as JSON && there are 6 blogs initially && id property is named 'id'", async () => {

@@ -13,10 +13,10 @@ const Comment = require("../models/comment")
 // })
 
 blogsRouter.get("/", async (req, res) => {
-  const userFromToken = req.user
-  if (!userFromToken) {
-    return res.status(401).json({ error: "token missing or invalid" })
-  }
+  //  const userFromToken = req.user
+  //  if (!userFromToken) {
+  //    return res.status(401).json({ error: "token missing or invalid" })
+  //  }
 
   const blogs = await Blog.find({}).populate("userId", "username name") // Blog.find({}) returns a Promise while await Blog.find({}) returns the result when find operation fullfilled // "username name" can be written as {username:1, name:1}
   console.log(blogs)
