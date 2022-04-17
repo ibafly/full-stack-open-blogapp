@@ -30,7 +30,7 @@ app.use(routes)
 
 if (process.env.NODE_ENV === "test") {
   const testingRouter = require("./controllers/testing")
-  app.use("/testing", testingRouter)
+  app.use("/testing", testingRouter) // cypress need this route to do end to end test, so before run `yarn test:e2e`, run `yarn start:test`. But no need to run `yarn start:test` before backend test `yarn test` bc we use supertest that will start the server automatically only when jest tests, and down the server when tests end.
 }
 
 app.use(middleware.unknownEndpoint)
