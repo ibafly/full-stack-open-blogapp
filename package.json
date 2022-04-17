@@ -10,16 +10,11 @@
     "deploy": "git push heroku main",
     "logs:prod": "heroku logs --tail",
     "lint": "eslint .",
-    "test": "NODE_ENV=test jest --verbose --runInBand",
-    "start:test": "NODE_ENV=test node index.js",
-    "fe.start": "react-scripts start",
-    "fe.build": "react-scripts build",
-    "fe.test": "react-scripts test",
-    "fe.eject": "react-scripts eject",
-    "fe.server": "json-server -p3001 db.json",
-    "fe.eslint": "eslint .",
-    "fe.cypress:open": "cypress open",
-    "fe.test:e2e": "cypress run"
+    "start:test": "cross-env NODE_ENV=test node index.js",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
+    "test:e2e": "cypress run",
+    "cypress:open": "cypress open",
+    "mock-server": "json-server -p3001 db.json"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
@@ -54,6 +49,7 @@
     "lodash": "^4.17.21",
     "nodemon": "^2.0.15",
     "react-error-overlay": "^6.0.10",
+    "regenerator-runtime": "^0.13.9",
     "sass": "^1.49.11",
     "sass-loader": "^12.6.0",
     "supertest": "^6.1.6",
@@ -62,9 +58,6 @@
     "webpack-dev-middleware": "^5.3.1",
     "webpack-dev-server": "^4.7.4",
     "webpack-hot-middleware": "^2.25.1"
-  },
-  "jest": {
-    "testEnvironment": "node"
   },
   "eslintConfig": {
     "extends": [
