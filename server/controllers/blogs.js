@@ -72,7 +72,6 @@ blogsRouter.post("/", async (req, res) => {
 })
 
 blogsRouter.delete("/:id", async (req, res) => {
-  const body = req.body
   const params = req.params
   const token = req.token
   const id = params.id

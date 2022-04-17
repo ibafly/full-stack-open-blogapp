@@ -1,5 +1,5 @@
-const { response } = require("express")
-const request = require("superagent")
+const { response } = require("express") // eslint-disable-line
+const request = require("superagent") // eslint-disable-line
 const logger = require("./logger")
 const jwt = require("jsonwebtoken")
 
@@ -32,7 +32,7 @@ const tokenExtractor = (request, response, next) => {
 }
 
 const userExtractor = (request, response, next) => {
-  logger.info(undefined !== null, null ? 1 : 2, request.token)
+  logger.info(undefined !== null, null ? 1 : 2, request.token) // eslint-disable-line
   request.user = request.token
     ? jwt.verify(request.token, process.env.SECRET_KEY)
     : null

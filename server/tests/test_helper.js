@@ -53,11 +53,11 @@ const aNewBlogWithoutTitleNorUrl = {
 }
 
 const nonExistingId = async () => {
-  const note = new Note({ content: "willremovethissoon", date: new Date() })
-  await note.save()
-  await note.remove()
+  const blog = new Blog({ content: "willremovethissoon", date: new Date() })
+  await blog.save()
+  await blog.remove()
 
-  return note._id.toString()
+  return blog._id.toString()
 }
 
 const blogsInDb = async () => {

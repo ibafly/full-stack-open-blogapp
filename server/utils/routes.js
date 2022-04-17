@@ -1,4 +1,4 @@
-const router = require('express').Router()
+const router = require("express").Router()
 const middleware = require("../utils/middleware")
 const usersRouter = require("../controllers/users")
 const blogsRouter = require("../controllers/blogs")

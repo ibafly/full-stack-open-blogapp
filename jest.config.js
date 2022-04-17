@@ -1,5 +1,5 @@
 module.exports = {
-  testEnvironment: 'node',
+  testEnvironment: "node",
   moduleNameMapper: {
     "@root/(.*)": "<rootDir>/$1",
     "@controllers/(.*)": "<rootDir>/server/controllers/$1",
@@ -7,8 +7,8 @@ module.exports = {
     "@utils/(.*)": "<rootDir>/server/utils/$1"
   },
   setupFilesAfterEnv: [
-    require.resolve('regenerator-runtime/runtime'),
+    require.resolve("regenerator-runtime/runtime"),
   ],
-  testPathIgnorePatterns: ['/node_modules/', '/cypress/', 'client'],
-  modulePathIgnorePatterns: ['/dist/'],
+  testPathIgnorePatterns: ["/node_modules/", "/cypress/", "client"],
+  modulePathIgnorePatterns: ["/dist/"],
 }

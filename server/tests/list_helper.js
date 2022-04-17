@@ -65,7 +65,7 @@ const blogs = [
 ]
 
 test("dummy returns one", () => {
-  const result = listHelper.dummy(emptyList)
+  const result = listHelper.dummy()
   expect(result).toBe(1)
 })
 

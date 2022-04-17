@@ -27,7 +27,7 @@ describe("initial blogs", () => {
 
     expect(res.body).toHaveLength(6)
 
-    for (blogObj of res.body) {
+    for (let blogObj of res.body) {
       expect(blogObj.id).toBeDefined()
     }
   }, 100000) // Jest default test timeout is 5000ms
@@ -39,7 +39,7 @@ describe("addition of a new blog", () => {
     // const result = await api.post("/api/login").send(rootUser).expect(200)
     const result = await api.post("/login").send(rootUser).expect(200)
     const token = result.body.token
-    const authorization = `bearer ` + token
+    const authorization = "bearer " + token
     // bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYxYzZhZTMwMWJmNmZiYjRlZThjMTM5YyIsImlhdCI6MTY0MDQxMDY3NX0.Nvv-GxYqrRKckXICb7yaApo4qXIKRgwLHKogQ6DUFIU
 
     const res = await api
@@ -59,7 +59,7 @@ describe("addition of a new blog", () => {
   })
 
   test("fails with no title nor url (under logged in state)", async () => {
-    const res = await api
+    await api
       // .post("/api/blogs")
       .post("/blogs")
       .set("Authorization", `bearer ${helper.rootUserToken}`)
@@ -107,7 +107,7 @@ describe("deletion of a blog", () => {
   //  })
   test("fails with an invalid blog id", async () => {
     // const res = await api.delete("/api/blogs/INVALID_ID").expect(400)
-    const res = await api.delete("/blogs/INVALID_ID").expect(400)
+    await api.delete("/blogs/INVALID_ID").expect(400)
   })
 })
 

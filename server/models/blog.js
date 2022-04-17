@@ -1,5 +1,3 @@
-const config = require("../utils/config")
-const logger = require("../utils/logger")
 const mongoose = require("mongoose")
 
 const blogSchema = new mongoose.Schema({

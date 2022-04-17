@@ -23,7 +23,7 @@ describe("when there is initially one user in db", () => {
     }
 
     // const res = await api.post("/api/users").send(newUserInfo).expect(201)
-    const res = await api.post("/users").send(newUserInfo).expect(201)
+    await api.post("/users").send(newUserInfo).expect(201)
 
     const usersAtEnd = await helper.usersInDb()
     const usernames = usersAtEnd.map(user => user.username)

@@ -16,13 +16,13 @@ app.use('/api', (req, res, next) => require('@root/server')(req, res, next)) // 
 /**
  *  Use "hot loading" in backend
  */
-const watcher = chokidar.watch('server', {
-	ignored: 'server/models/**'
+const watcher = chokidar.watch("server", {
+  ignored: "server/models/**"
 }) // Watch server folder
-watcher.on('ready', () => {
-  watcher.on('all', () => {
+watcher.on("ready", () => {
+  watcher.on("all", () => {
     Object.keys(require.cache).forEach((id) => {
-      if (id.includes('server')) delete require.cache[id] // Delete all require caches that point to server folder (*)
+      if (id.includes("server")) delete require.cache[id] // Delete all require caches that point to server folder (*)
     })
   })
 })
@@ -37,28 +37,28 @@ if (!config.inProduction) {
   const hotMiddleWare = require('webpack-hot-middleware')
   const webpackConf = require('@root/webpack.config')
   /* eslint-enable */
-  const compiler = webpack(webpackConf('development', { mode: 'development' }))
+  const compiler = webpack(webpackConf("development", { mode: "development" }))
 
   const devMiddleware = middleware(compiler)
   app.use(devMiddleware)
   app.use(hotMiddleWare(compiler))
-  app.use('*', (req, res, next) => {
-    const filename = path.join(compiler.outputPath, 'index.html')
+  app.use("*", (req, res, next) => {
+    const filename = path.join(compiler.outputPath, "index.html")
     devMiddleware.waitUntilValid(() => {
       compiler.outputFileSystem.readFile(filename, (err, result) => {
         if (err) return next(err)
-        res.set('content-type', 'text/html')
+        res.set("content-type", "text/html")
         res.send(result)
         return res.end()
       })
     })
   })
 } else {
-  const DIST_PATH = path.resolve(__dirname, './dist')
-  const INDEX_PATH = path.resolve(DIST_PATH, 'index.html')
+  const DIST_PATH = path.resolve(__dirname, "./dist")
+  const INDEX_PATH = path.resolve(DIST_PATH, "index.html")
 
   app.use(express.static(DIST_PATH))
-  app.get('*', (req, res) => res.sendFile(INDEX_PATH))
+  app.get("*", (req, res) => res.sendFile(INDEX_PATH))
 }
 
 

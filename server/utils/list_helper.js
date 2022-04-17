@@ -1,6 +1,6 @@
 const _ = require("lodash")
 
-const dummy = blogs => {
+const dummy = () => {
   return 1
 }
 
@@ -37,7 +37,7 @@ const mostBlogs = blogs => {
 const mostLikes = blogs => {
   const counts = _.reduce(
     blogs,
-    (result, ele, idx) => {
+    (result, ele) => {
       result[ele.author] = result[ele.author] + ele.likes || ele.likes
       return result
     },

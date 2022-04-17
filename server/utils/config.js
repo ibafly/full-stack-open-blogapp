@@ -1,5 +1,5 @@
 require("dotenv").config()
-const common = require('@root/config/common')
+const common = require("@root/config/common")
 
 const PORT = process.env.PORT || 3003
 const MONGO_URL =
