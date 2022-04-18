@@ -58,6 +58,9 @@ if (!config.inProduction) {
   const INDEX_PATH = path.resolve(DIST_PATH, "index.html")
 
   app.use(express.static(DIST_PATH))
+  app.get('/health', (req, res) => {
+    res.send('ok')
+  })
   app.get("*", (req, res) => res.sendFile(INDEX_PATH))
 }
 
