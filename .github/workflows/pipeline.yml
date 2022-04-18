@@ -11,6 +11,8 @@ on:
 env:
   COMMIT: ${{ github.event.head_commit.url }}
   COMMITTER: ${{ github.event.head_commit.committer.username }}
+  MONGODB_URI: ${{secrets.MONGODB_URI}}
+  SECRET_KEY: ${{secrets.SECRET_KEY}}
 
 jobs:
   simple_deployment_pipeline:
