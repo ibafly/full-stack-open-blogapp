@@ -24,6 +24,7 @@ jobs:
         run: |
           touch .env
           echo MONGODB_URI = ${{secrets.MONGODB_URI}} >> .env
+          echo TEST_MONGODB_URI = ${{secrets.TEST_MONGODB_URI}} >> .env
           echo SECRET_KEY = ${{secrets.SECRET_KEY}} >> .env
       - name: yarn install
         run: yarn install
@@ -31,12 +32,14 @@ jobs:
         run: yarn lint
       - name: build
         run: yarn build
+      - name: test
+        run: yarn test
       - name: e2e test
         uses: cypress-io/github-action@v2
         with:
           command: yarn test:e2e
           start: yarn start:test
-          wait-on: http://localhost:3000
+          wait-on: http://localhost:3000/api/blogs
       - name: deploy
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         uses: akhileshns/heroku-deploy@v3.12.12
@@ -44,6 +47,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "murmuring-island-61500"
           heroku_email: "copppe@gmail.com"
+          env_file: ".env"
           healthcheck: "https://murmuring-island-61500.herokuapp.com/health"
           rollbackonhealthcheckfailed: true
   tag_release:

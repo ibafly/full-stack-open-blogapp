@@ -27,10 +27,11 @@ watcher.on("ready", () => {
   })
 })
 
-/**
+if (!config.inProduction) {
+
+  /**
  * For frontend use hot loading when in development, else serve the static content
  */
-if (!config.inProduction) {
   /* eslint-disable */
   const webpack = require('webpack')
   const middleware = require('webpack-dev-middleware')
