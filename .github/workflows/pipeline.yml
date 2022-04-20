@@ -32,14 +32,8 @@ jobs:
         run: yarn lint
       - name: build
         run: yarn build
-      - name: test
-        # run: yarn test
-        # we rely on already running http server, so first do `yarn start:test`
-        # supertest listens to this server
-        with:
-          command: yarn test
-          start: yarn start:test
-          wait-on: http://localhost:3000/api
+          #      - name: test
+          #        run: yarn test
       - name: e2e test
         uses: cypress-io/github-action@v2
         with:
