@@ -33,13 +33,19 @@ jobs:
       - name: build
         run: yarn build
       - name: test
-        run: yarn test
+        # run: yarn test
+        # we rely on already running http server, so first do `yarn start:test`
+        # supertest listens to this server
+        with:
+          command: yarn test
+          start: yarn start:test
+          wait-on: http://localhost:3000/api
       - name: e2e test
         uses: cypress-io/github-action@v2
         with:
           command: yarn test:e2e
           start: yarn start:test
-          wait-on: http://localhost:3000/api/blogs
+          wait-on: http://localhost:3000/
       - name: deploy
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         uses: akhileshns/heroku-deploy@v3.12.12

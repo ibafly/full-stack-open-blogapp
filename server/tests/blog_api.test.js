@@ -1,14 +1,16 @@
 const mongoose = require("mongoose")
-const supertest = require("supertest")
+const request = require("supertest")
 // const app = require("../../index")
-const app = require("../index")
-const api = supertest(app)
+// const app = require("../index")
+// const api = request(app)
+const api = request("http://localhost:3000/api")
 const helper = require("./test_helper")
 
 const Blog = require("../models/blog")
 const User = require("../models/user")
 
 const db = mongoose.connection
+
 db.once("open", () => {
   console.log("Database connected!!")
 })
