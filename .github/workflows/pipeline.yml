@@ -15,6 +15,7 @@ env:
 jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-20.04
+    environment: TEST_ENV
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
@@ -22,10 +23,10 @@ jobs:
           node-version: "16"
       - name: Create .env file
         run: |
-          touch .env
-          echo MONGODB_URI = ${{secrets.MONGODB_URI}} >> .env
-          echo TEST_MONGODB_URI = ${{secrets.TEST_MONGODB_URI}} >> .env
-          echo SECRET_KEY = ${{secrets.SECRET_KEY}} >> .env
+          echo "TEST_MONGODB_URI = ${{secrets.TEST_MONGODB_URI}}" >> .env
+          echo "SECRET_KEY = ${{secrets.SECRET_KEY}}" >> .env
+          echo "MONGODB_URI = ${{secrets.MONGODB_URI}}" >> .env
+          echo "HEROKU_API_KEY = ${{secrets.HEROKU_API_KEY}}" >> .env
       - name: yarn install
         run: yarn install
       - name: lint
@@ -39,7 +40,7 @@ jobs:
         with:
           command: yarn test:e2e
           start: yarn start:test
-          wait-on: http://localhost:3000/
+          wait-on: 'http://localhost:3000'
       - name: deploy
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         uses: akhileshns/heroku-deploy@v3.12.12

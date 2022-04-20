@@ -1,3 +1,4 @@
+require("dotenv").config()
 require("module-alias/register") // active module-alias
 //const config = require("./utils/config")
 const config = require("@utils/config")
@@ -8,6 +9,25 @@ const path = require("path")
 const http = require("http")
 //const logger = require("./utils/logger")
 const logger = require("@utils/logger")
+
+
+const mongoose = require("mongoose")
+
+// logger.info("connecting to ", config.MONGO_URL)
+console.log("config!! ",config, "process node env!! ",process.env.NODE_ENV, "process.env.MONGODB_URI: ", process.env.MONGODB_URI, "process.env.TEST_MONGODB_URI: ", process.env.TEST_MONGODB_URI, "SECRET_KEY: ", process.env.SECRET_KEY, "HEROKU: ", process.env.HEROKU_API_KEY)
+console.log("connecting to ", config.MONGO_URL)
+
+mongoose
+  .connect(config.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("connected to MongoDB")
+  })
+  .catch(err => {
+    console.log("error connecting to MongoDB", err.message)
+  })
 
 const app = express()
 // Require is here so we can delete it from cache when files change (*)

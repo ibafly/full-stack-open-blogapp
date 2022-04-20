@@ -1,4 +1,9 @@
 describe("Blog app", function () {
+//  before(function () { // before all
+//    cy.visit("http://localhost:3000") // homepage request /api/blogs to activite mongoose connection before other operations, when mongoose connection setup is in server/index.js but not index.js
+//    })
+//  })
+
   beforeEach(function () {
     cy.request("POST", "http://localhost:3000/api/testing/reset")
     cy.visit("http://localhost:3000")
@@ -100,7 +105,7 @@ describe("Blog app", function () {
       cy.get(".remove").should("not.exist")
     })
 
-    it.only("blogs are listed according to likes with the most being first", function () {
+    it("blogs are listed according to likes with the most being first", function () {
       cy.createBlog({
         title: "One blog",
         author: "Robo",

@@ -1,24 +1,27 @@
 const express = require("express")
 require("express-async-errors") // function as try-catch wrapped around async/await
-const config = require("./utils/config")
-const logger = require("./utils/logger")
+// const config = require("./utils/config")
+// const logger = require("./utils/logger")
 const routes = require("./utils/routes")
 const middleware = require("./utils/middleware")
 
 const app = express()
 const cors = require("cors")
-const mongoose = require("mongoose")
-
-logger.info("connecting to ", config.MONGO_URL)
-
-mongoose
-  .connect(config.MONGO_URL)
-  .then(() => {
-    logger.info("connected to MongoDB")
-  })
-  .catch(err => {
-    logger.error("error connecting to MongoDB", err.message)
-  })
+// const mongoose = require("mongoose")
+//
+// logger.info("connecting to ", config.MONGO_URL)
+//
+// mongoose
+//   .connect(config.MONGO_URL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     logger.info("connected to MongoDB")
+//   })
+//   .catch(err => {
+//     logger.error("error connecting to MongoDB", err.message)
+//   })
 
 app.use(cors())
 //app.use(express.static("build"))
