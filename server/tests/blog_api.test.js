@@ -8,6 +8,15 @@ const helper = require("./test_helper")
 const Blog = require("../models/blog")
 const User = require("../models/user")
 
+const db = mongoose.connection
+db.once("open", () => {
+  console.log("Database connected!!")
+})
+
+db.on("error", err => {
+  console.error("connection error:", err)
+})
+
 beforeEach(async () => {
   // const testAll = await Blog.find({})
   // console.log(testAll)
@@ -15,7 +24,7 @@ beforeEach(async () => {
   await Blog.insertMany(helper.initialBlogs)
   await User.deleteMany({})
   await User.insertMany(helper.initialOneRootUser)
-}, 1000000)
+}, 100000)
 
 describe("initial blogs", () => {
   test("are returned as JSON && there are 6 blogs initially && id property is named 'id'", async () => {

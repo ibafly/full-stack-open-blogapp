@@ -6,6 +6,15 @@ const helper = require("./test_helper")
 
 const User = require("../models/user")
 
+const db = mongoose.connection
+db.once("open", () => {
+  console.log("Database connected!!")
+})
+
+db.on("error", err => {
+  console.error("connection error:", err)
+})
+
 beforeEach(async () => {
   await User.deleteMany({})
 
