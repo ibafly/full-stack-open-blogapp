@@ -49,8 +49,10 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "murmuring-island-61500"
           heroku_email: "copppe@gmail.com"
-          env_file: ".env"
+            #          env_file: ".env"
           healthcheck: "https://murmuring-island-61500.herokuapp.com/health"
+          delay: 10
+          checkstring: "ok"
           rollbackonhealthcheckfailed: true
   tag_release:
     needs: [simple_deployment_pipeline]
