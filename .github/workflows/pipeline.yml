@@ -15,7 +15,7 @@ env:
 jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-20.04
-    environment: TEST_ENV
+      #    environment: TEST_ENV
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
@@ -33,8 +33,8 @@ jobs:
         run: yarn lint
       - name: build
         run: yarn build
-      - name: test
-        run: yarn test
+          #      - name: test
+          #        run: yarn test
           #      - name: e2e test
           #        uses: cypress-io/github-action@v2
           #        with:
