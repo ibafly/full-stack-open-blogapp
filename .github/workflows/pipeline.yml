@@ -38,9 +38,10 @@ jobs:
       - name: e2e test
         uses: cypress-io/github-action@v2
         with:
-          command: yarn test:e2e
+          command: yarn test:e2e -q
           start: yarn start:test
           wait-on: 'http://localhost:3000'
+          config: video=false
       - name: deploy
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         uses: akhileshns/heroku-deploy@v3.12.12
