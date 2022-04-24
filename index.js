@@ -14,7 +14,6 @@ const logger = require("@utils/logger")
 const mongoose = require("mongoose")
 
 // logger.info("connecting to ", config.MONGO_URL)
-console.log("config!! ",config, "process node env!! ",process.env.NODE_ENV, "process.env.MONGODB_URI: ", process.env.MONGODB_URI, "process.env.TEST_MONGODB_URI: ", process.env.TEST_MONGODB_URI, "SECRET_KEY: ", process.env.SECRET_KEY, "HEROKU: ", process.env.HEROKU_API_KEY)
 console.log("connecting to ", config.MONGO_URL)
 
 mongoose
