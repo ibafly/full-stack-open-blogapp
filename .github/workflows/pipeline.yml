@@ -42,6 +42,8 @@ jobs:
           #          start: yarn start:test
           #          wait-on: 'http://localhost:3000'
           #          config: video=false
+      - name: remove files
+        run: rm ./node_modules -rf
       - name: deploy
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         uses: akhileshns/heroku-deploy@v3.12.12
@@ -54,6 +56,9 @@ jobs:
           delay: 10
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
+          procfile: true
+          dontautocreate: true
+          buildpack: "https://github.com/heroku/heroku-buildpack-nodejs.git"
   tag_release:
     needs: [simple_deployment_pipeline]
     if: ${{ !contains(join(github.event.commits.*.message, ' '), '#skip') }}
