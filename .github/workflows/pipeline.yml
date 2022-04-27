@@ -35,13 +35,14 @@ jobs:
         run: yarn build
           #      - name: test
           #        run: yarn test
-          #      - name: e2e test
-          #        uses: cypress-io/github-action@v2
-          #        with:
-          #          command: yarn test:e2e -q
-          #          start: yarn start:test
-          #          wait-on: 'http://localhost:3000'
-          #          config: video=false
+      - name: e2e test
+        uses: cypress-io/github-action@v2
+        with:
+          command: yarn test:e2e -q
+          start: yarn start:test
+          wait-on: 'http://localhost:3000'
+          config: video=false
+      # remove node_modules to avoid error `spawnSync /bin/sh ENOBUFS`
       - name: remove files
         run: rm ./node_modules -rf
       - name: deploy
@@ -70,4 +71,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
-          RELEASE_BRANCHES: master
+          RELEASE_BRANCHES: main
