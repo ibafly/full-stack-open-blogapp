@@ -11,22 +11,22 @@ const http = require("http")
 const logger = require("@utils/logger")
 
 
-const mongoose = require("mongoose")
+//const mongoose = require("mongoose")
 
 // logger.info("connecting to ", config.MONGO_URL)
-console.log("connecting to ", config.MONGO_URL)
-
-mongoose
-  .connect(config.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("connected to MongoDB")
-  })
-  .catch(err => {
-    console.log("error connecting to MongoDB", err.message)
-  })
+// console.log("connecting to ", config.MONGO_URL)
+//
+// mongoose
+//   .connect(config.MONGO_URL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     console.log("connected to MongoDB")
+//   })
+//   .catch(err => {
+//     console.log("error connecting to MongoDB", err.message)
+//   })
 
 const app = express()
 // Require is here so we can delete it from cache when files change (*)

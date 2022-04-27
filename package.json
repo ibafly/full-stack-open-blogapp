@@ -15,7 +15,8 @@
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
     "test:e2e": "cypress run",
     "cypress:open": "cypress open",
-    "mock-server": "json-server -p3001 db.json"
+    "mock-server": "json-server -p3001 db.json",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
@@ -49,6 +50,7 @@
     "eslint-plugin-jest": "^25.3.2",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^7.0.0",
     "lodash": "^4.17.21",
     "nodemon": "^2.0.15",
     "react-error-overlay": "^6.0.10",

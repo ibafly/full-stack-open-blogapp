@@ -1,8 +1,8 @@
 const mongoose = require("mongoose")
 const request = require("supertest")
-// const app = require("../index")
-// const api = request(app)
-const api = request("http://localhost:3000/api")
+const app = require("../index")
+const api = request(app)
+// const api = request("http://localhost:3000/api")
 const helper = require("./test_helper")
 
 const User = require("../models/user")
