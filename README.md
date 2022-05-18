@@ -1,6 +1,6 @@
 # Notes on making blog app work with CI
 
-Blog app is derived from what I made in full stack open part4&5, and CI is operated in Github Actions.
+Blog app is derived from what I made in full stack open part4&5, and CI is operated by Github Actions.
 
 - Create `./.env` file from repo secrets, for `dotenv` to use:
 
