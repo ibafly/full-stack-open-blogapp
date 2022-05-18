@@ -9,6 +9,7 @@ module.exports = {
   setupFilesAfterEnv: [
     require.resolve("regenerator-runtime/runtime"),
   ],
-  testPathIgnorePatterns: ["/node_modules/", "/cypress/", "client"],
+//  testPathIgnorePatterns: ["/node_modules/", "/cypress/", "client"],
+  testPathIgnorePatterns: ["/node_modules/", "/cypress/", "/client/"],
   modulePathIgnorePatterns: ["/dist/"],
 }
