@@ -3,19 +3,21 @@ module.exports = {
   "env": {
       "browser": true,
 	  "node": true,
+      "es2024": true,
       "es6": true,
       "jest/globals": true,
 	  "cypress/globals": true
   },
   "extends": [
       "eslint:recommended",
-      "plugin:react/recommended"
+      "plugin:react/recommended",
+      'plugin:react/jsx-runtime'
   ],
   "parserOptions": {
       "ecmaFeatures": {
           "jsx": true
       },
-      "ecmaVersion": 2018,
+      "ecmaVersion": "latest",
       "sourceType": "module"
   },
   "overrides": [

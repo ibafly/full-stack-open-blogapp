@@ -4,6 +4,8 @@ module.exports = (api) => {
   const presets = [
     ["@babel/preset-env", {
       modules: false,
+      "useBuiltIns": "usage",
+      "corejs": "3.0.0"
     }],
     "@babel/preset-react",
   ]
