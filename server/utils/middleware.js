@@ -1,5 +1,4 @@
 const { response } = require("express") // eslint-disable-line
-const request = require("superagent") // eslint-disable-line
 const logger = require("./logger")
 const jwt = require("jsonwebtoken")
 
