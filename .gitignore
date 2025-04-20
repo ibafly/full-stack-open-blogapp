@@ -4,3 +4,5 @@ db.json
 test-rest-api
 pnpm-lock.yaml
 pnpm-workspace.yaml
+dist
+.next
