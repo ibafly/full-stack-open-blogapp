@@ -1,3 +1,11 @@
+# Notes on refactoring this blog app to use Next.js
+
+Now the old and new versions co-exist. How to up the old version:
+
+- Rename `.babel.config.js` to `babel.config.js`, `.webpack.config.js` to `webpack.config.js`.
+- In shell run `pnpm dev-old` (dev-old|build-old|start-old|lint-old).
+
+
 # Notes on making blog app work with CI
 
 Blog app is derived from what I made in full stack open part4&5, and CI is operated by Github Actions.
