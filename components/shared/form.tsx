@@ -13,17 +13,19 @@ interface Field {
 }
 
 export default function Form({
-    children,
+    // children,
     submitButtonText,
     fields,
     fireOnSubmit,
+    isLoading,
     // openPopover,
     // setOpenPopover,
 }: {
-    children: ReactNode;
+    // children: ReactNode;
     submitButtonText: String;
     fields: Field[];
     fireOnSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
+    isLoading: boolean;
     // openPopover: boolean;
     // setOpenPopover: Dispatch<SetStateAction<boolean>>;
 
@@ -31,7 +33,7 @@ export default function Form({
     return (
         <FormPrimitive.Root onSubmit={fireOnSubmit} className="w-[200px]">
             {fields.map(({ name, label, children, required }) => (
-                <FormPrimitive.Field className="relative mb-2.5 grid" name={name}>
+                <FormPrimitive.Field key={name} className="relative mb-2.5 grid" name={name}>
                     <div className="flex items-baseline justify-between">
                         <FormPrimitive.Label className="leading-[35px] font-mono">{label}</FormPrimitive.Label>
 
@@ -49,7 +51,7 @@ export default function Form({
             ))}
 
             <FormPrimitive.Submit asChild>
-                <button type="submit" className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
+                <button type="submit" className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" disabled={isLoading}>
                     {submitButtonText}
                 </button>
             </FormPrimitive.Submit>
