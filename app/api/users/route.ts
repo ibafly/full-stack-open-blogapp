@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import connectDb from "@/lib/dbConnect"
 import { verifySessionOrToken } from "@/lib/dal";
 
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
 }
 
 
-export async function PUT(request: Request) {
+export async function PUT(request: NextRequest) {
 
     const userFromToken = await verifySessionOrToken(request.token)
     if (!userFromToken) {

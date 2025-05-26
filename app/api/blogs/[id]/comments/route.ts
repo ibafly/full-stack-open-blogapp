@@ -47,7 +47,8 @@ export async function POST(request: NextRequest,
     }
 
     const { id } = await params
-    const body = request.body
+    // const body = request.body
+    const body = await request.json()
 
     if (!body.content) {
         return NextResponse.json(
