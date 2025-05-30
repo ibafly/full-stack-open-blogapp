@@ -3,9 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { deleteCookie, getCookie } from "cookies-next/client";
-import Togglable from "@/components/shared/togglable";
+import Togglable, { type ToggleRef } from "@/components/shared/togglable";
 import AddBlogForm, { type FormData } from "@/components/home/add-blog-form";
-import BlogEntry from "@/components/home/blog-entry";
+import BlogEntry, { type BlogData } from "@/components/home/blog-entry";
 // import { GetServerSideProps } from 'next';
 // import { getSession } from 'next-auth/react';
 
@@ -15,23 +15,11 @@ interface User {
     name: string;
 }
 
-interface BlogData extends FormData {
-    id: string;
-    // userId: string;
-    userId: string | {
-        username: string;
-        id: string;
-        name: string;
-    };
-    commentIds: string[] | [];
-    likes: number;
-    toggle?: boolean; // for togglable blog form
-}
 
 export default function Dashboard() {
     const [user, setUser] = useState<User | null>(null)
     const [blogs, setBlogs] = useState<BlogData[]>([])
-    const togglableBlogFormRef = useRef<HTMLButtonElement>(null)
+    const togglableBlogFormRef = useRef<ToggleRef>(null)
     const router = useRouter()
 
     useEffect(() => {
@@ -76,7 +64,7 @@ export default function Dashboard() {
 
     const addBlog = async (blog: FormData) => {
         try {
-            console.log("ADD_BLOG:::::::::", user, user.userId)
+            console.log("ADD_BLOG:::::::::", user, user?.userId)
             await fetch('/api/blogs', {
                 method: 'POST',
                 headers: {
@@ -96,7 +84,7 @@ export default function Dashboard() {
                     console.log(err)
                 })
 
-            togglableBlogFormRef.current.toggleVisibility() // fold blog form after successfully create a blog
+            togglableBlogFormRef.current?.toggleVisibility() // fold blog form after successfully create a blog
 
             // setMsg(`a new blog ${blog.title} by ${blog.author} added`)
             // setTimeout(() => {
@@ -130,9 +118,9 @@ export default function Dashboard() {
                 author: foundBlog.author,
                 url: foundBlog.url,
                 likes: foundBlog.likes + 1,
-                userId: foundBlog.userId ? foundBlog.userId.id : null, // use condition for test purpose, eliminate console error when blog has no userId field.
+                userId: typeof foundBlog.userId === 'object' ? (foundBlog.userId as { id: string }).id : foundBlog.userId, // handle both string and object cases
             }
-            
+
             fetch(`/api/blogs/${foundBlog.id}`, {
                 method: "PUT",
                 headers: {
@@ -192,7 +180,7 @@ export default function Dashboard() {
                 />
 
                 <button onClick={() => {
-                    togglableBlogFormRef.current.toggleVisibility()
+                    togglableBlogFormRef.current?.toggleVisibility()
                 }}
                     className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
                     Cancel
@@ -211,7 +199,7 @@ export default function Dashboard() {
                                 opAfterLikeBtnOnClick={plusOneLike}
                                 opAfterRemoveBtnOnClick={deleteBlog}
                                 showRemoveBtn={
-                                    blog.userId && user?.userId && blog.userId.id === user.userId ? true : false
+                                    blog.userId && user?.userId && typeof blog.userId === 'object' && blog.userId.id === user.userId ? true : false
                                 }
                             />
                             {/* <div>{JSON.stringify(blog.userId)}  {blog.userId.id}    {user?.userId}</div> */}

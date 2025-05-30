@@ -1,3 +1,17 @@
+import { type FormData } from "@/components/home/add-blog-form";
+
+export interface BlogData extends FormData {
+    id: string;
+    // userId: string;
+    userId: string | {
+        username: string;
+        id: string;
+        name: string;
+    };
+    commentIds: string[] | [];
+    likes: number;
+    toggle?: boolean; // for togglable blog form
+}
 
 export default function BlogEntry({
     blog,
@@ -5,15 +19,21 @@ export default function BlogEntry({
     opAfterLikeBtnOnClick,
     opAfterRemoveBtnOnClick,
     showRemoveBtn,
+}: {
+    blog: BlogData;
+    toggleBtnOnClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    opAfterLikeBtnOnClick: (blogId: string) => Promise<void>;
+    opAfterRemoveBtnOnClick: (blogId: string) => Promise<void>;
+    showRemoveBtn?: boolean;
+
 }) {
-    const likeBtnOnClick = event => {
-        const blogId =
-            event.target.parentNode.parentNode.parentNode.getAttribute("data-id")
-        opAfterLikeBtnOnClick(blogId)
+    const likeBtnOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        const blogId = event.currentTarget.closest('[data-id]')?.getAttribute("data-id");
+        opAfterLikeBtnOnClick(blogId || ''); // 处理可能的null值
     }
-    const removeBtnOnClick = event => {
-        const blogId = event.target.parentNode.parentNode.getAttribute("data-id")
-        opAfterRemoveBtnOnClick(blogId)
+    const removeBtnOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        const blogId = event.currentTarget.closest('[data-id]')?.getAttribute("data-id");
+        opAfterRemoveBtnOnClick(blogId || '')
     }
     const blogStyle = {
         paddingTop: 10,
@@ -38,7 +58,7 @@ export default function BlogEntry({
                         like
                     </button>
                 </div>
-                {blog.userId && <div>{blog.userId.name}</div>}
+                {typeof blog.userId === 'object' && <div>{blog.userId.name}</div>}
                 {showRemoveBtn && (
                     <button className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" onClick={removeBtnOnClick}>
                         remove

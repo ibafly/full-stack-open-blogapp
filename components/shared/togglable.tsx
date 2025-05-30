@@ -1,11 +1,9 @@
 "use client"
 
-// import React, { useState, useImperativeHandle, PropsWithChildren } from "react"
 import PropTypes from "prop-types"
-
 import { forwardRef, useImperativeHandle, useState, PropsWithChildren } from "react"
 
-interface ToggleRef {
+export interface ToggleRef {
   toggleVisibility: () => void
 }
 
