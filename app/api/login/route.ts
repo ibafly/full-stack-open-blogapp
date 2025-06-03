@@ -30,35 +30,36 @@ export async function POST(request: Request) {
         )
     }
 
-    const userForToken = { username: user.username, id: user._id }
-    const token = await jwt.sign(userForToken, process.env.SECRET_KEY)
-    // httpOnly cookie can only be set on the server side
-    setCookie("auth-token", token, {
-        cookies, //it's a function
-        maxAge: 60 * 60 * 24,
-        secure: process.env.NODE_ENV === 'production',
-        httpOnly: true
-        // path: "/"
-        // path: "/api"
-    })
-    
+  const userForToken = { username: user.username, id: user._id }
+  const token = await jwt.sign(userForToken, process.env.SECRET_KEY)
+  // httpOnly cookie can only be set on the server side
+  await setCookie("auth-token", token, {
+    cookies, //it's a function
+    maxAge: 60 * 60 * 24,
+    secure: process.env.NODE_ENV === "production",
+    httpOnly: true
+    // path: "/"
+    // path: "/api"
+  })
 
-    const loggedUser = {
-        username: user.username,
-        name: user.name,
-        userId: user._id
-    }
-    setCookie("logged-user", JSON.stringify(loggedUser), {
-        cookies,
-        maxAge: 60 * 60 * 24,
-        secure: process.env.NODE_ENV === 'production',
-        httpOnly: false
-    })
 
-    return NextResponse.json(
-        { userId: user._id, username: user.username, name: user.name },
-        { status: 200 }
-    )
+  const loggedUser = {
+    username: user.username,
+    name: user.name,
+    userId: user._id
+  }
+
+  await setCookie("logged-user", JSON.stringify(loggedUser), {
+    cookies,
+    maxAge: 60 * 60 * 24,
+    secure: process.env.NODE_ENV === "production",
+    httpOnly: false
+  })
+  
+  return NextResponse.json(
+    { userId: user._id, username: user.username, name: user.name },
+    { status: 200 }
+  )
 
 }
 
