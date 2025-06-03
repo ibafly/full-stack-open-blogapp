@@ -25,8 +25,7 @@ userSchema.set("toJSON", {
 })
 
 //module.exports = mongoose.model("User", userSchema)
-module.exports = mongoose.models.User || mongoose.model("User", userSchema)
-
+export default mongoose.models.User || mongoose.model("User", userSchema)
 
 
 // *** This fixed my error. ***

@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { Dispatch, ReactNode, SetStateAction } from "react";
-import * as PopoverPrimitive from "@radix-ui/react-popover";
-import { Drawer } from "vaul";
-import useMediaQuery from "@/lib/hooks/use-media-query";
+import { Dispatch, ReactNode, SetStateAction } from "react"
+import * as PopoverPrimitive from "@radix-ui/react-popover"
+import { Drawer } from "vaul"
+import useMediaQuery from "@/lib/hooks/use-media-query"
 
 export default function Popover({
   children,
@@ -19,7 +19,7 @@ export default function Popover({
   setOpenPopover: Dispatch<SetStateAction<boolean>>;
   mobileOnly?: boolean;
 }) {
-  const { isMobile } = useMediaQuery();
+  const { isMobile } = useMediaQuery()
 
   if (isMobile) {
     return (
@@ -38,7 +38,7 @@ export default function Popover({
           <Drawer.Overlay />
         </Drawer.Portal>
       </Drawer.Root>
-    );
+    )
   }
 
   return (
@@ -56,5 +56,5 @@ export default function Popover({
         </PopoverPrimitive.Content>
       </PopoverPrimitive.Portal>
     </PopoverPrimitive.Root>
-  );
+  )
 }

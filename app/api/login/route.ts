@@ -1,34 +1,34 @@
-import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import { setCookie } from "cookies-next/server";
+import { NextRequest, NextResponse } from "next/server"
+import { cookies } from "next/headers"
+import { setCookie } from "cookies-next/server"
 import connectDb from "@/lib/dbConnect"
 
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
-const User = require("@/models/user")
+import User from "@/models/user"
 
-type LoginRequest = {
-    username: string;
-    password: string;
+interface LoginRequest extends NextRequest {
+  username: string;
+  password: string;
 }
 
-export async function POST(request: Request) {
-    await connectDb()
-    // const body = request.body
-    const body = await request.json()
+export async function POST(request: LoginRequest) {
+  await connectDb()
+  // const body = request.body
+  const body = await request.json()
 
-    const user = await User.findOne({ username: body.username })
-    const bothRight = user
-        ? await bcrypt.compare(body.password, user.passwordHash)
-        : false
+  const user = await User.findOne({ username: body.username })
+  const bothRight = user
+    ? await bcrypt.compare(body.password, user.passwordHash)
+    : false
 
-    if (!bothRight) {
-        return NextResponse.json(
-            { error: 'invalid username or password' },
-            { status: 401 }
-        )
-    }
+  if (!bothRight) {
+    return NextResponse.json(
+      { error: "invalid username or password" },
+      { status: 401 }
+    )
+  }
 
   const userForToken = { username: user.username, id: user._id }
   const token = await jwt.sign(userForToken, process.env.SECRET_KEY)

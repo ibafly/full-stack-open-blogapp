@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+import mongoose from "mongoose"
 
 const blogSchema = new mongoose.Schema({
   title: String,
@@ -26,4 +26,4 @@ blogSchema.set("toJSON", {
   },
 })
 
-module.exports = mongoose.models.Blog || mongoose.model("Blog", blogSchema)
+export default mongoose.models.Blog || mongoose.model("Blog", blogSchema)

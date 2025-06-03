@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { FormEvent, Children, Dispatch, ReactNode, SetStateAction } from "react";
-import * as FormPrimitive from "@radix-ui/react-form";
+import { FormEvent, Children, Dispatch, ReactNode, SetStateAction } from "react"
+import * as FormPrimitive from "@radix-ui/react-form"
 // import { Drawer } from "vaul";
 // import useMediaQuery from "@/lib/hooks/use-media-query";
 
@@ -13,13 +13,13 @@ interface Field {
 }
 
 export default function Form({
-    // children,
-    submitButtonText,
-    fields,
-    fireOnSubmit,
-    isLoading,
-    // openPopover,
-    // setOpenPopover,
+  // children,
+  submitButtonText,
+  fields,
+  fireOnSubmit,
+  isLoading,
+  // openPopover,
+  // setOpenPopover,
 }: {
     // children: ReactNode;
     submitButtonText: String;
@@ -30,33 +30,33 @@ export default function Form({
     // setOpenPopover: Dispatch<SetStateAction<boolean>>;
 
 }) {
-    return (
-        <FormPrimitive.Root onSubmit={fireOnSubmit} className="w-[200px]">
-            {fields.map(({ name, label, children, required }) => (
-                <FormPrimitive.Field key={name} className="relative mb-2.5 grid" name={name}>
-                    <div className="flex items-baseline justify-between">
-                        <FormPrimitive.Label className="leading-[35px] font-mono">{label}</FormPrimitive.Label>
+  return (
+    <FormPrimitive.Root onSubmit={fireOnSubmit} className="w-[200px]">
+      {fields.map(({ name, label, children, required }) => (
+        <FormPrimitive.Field key={name} className="relative mb-2.5 grid" name={name}>
+          <div className="flex items-baseline justify-between">
+            <FormPrimitive.Label className="leading-[35px] font-mono">{label}</FormPrimitive.Label>
 
-                    </div>
-                    <FormPrimitive.Control className="" asChild>
-                        {/* <input className="" type="email" required /> */}
-                        {children}
-                    </FormPrimitive.Control>
-                    {required && (
-                        <FormPrimitive.Message className="absolute pointer-events-none left-4 bottom-3  text-xs opacity-50" match="valueMissing">
+          </div>
+          <FormPrimitive.Control className="" asChild>
+            {/* <input className="" type="email" required /> */}
+            {children}
+          </FormPrimitive.Control>
+          {required && (
+            <FormPrimitive.Message className="absolute pointer-events-none left-4 bottom-3  text-xs opacity-50" match="valueMissing">
                             Please enter your {name}.
-                        </FormPrimitive.Message>
-                    )}
-                </FormPrimitive.Field>
-            ))}
+            </FormPrimitive.Message>
+          )}
+        </FormPrimitive.Field>
+      ))}
 
-            <FormPrimitive.Submit asChild>
-                <button type="submit" className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" disabled={isLoading}>
-                    {submitButtonText}
-                </button>
-            </FormPrimitive.Submit>
-        </FormPrimitive.Root>
-    );
+      <FormPrimitive.Submit asChild>
+        <button type="submit" className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" disabled={isLoading}>
+          {submitButtonText}
+        </button>
+      </FormPrimitive.Submit>
+    </FormPrimitive.Root>
+  )
 }
 
 

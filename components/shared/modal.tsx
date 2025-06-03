@@ -1,10 +1,10 @@
-"use client";
+"use client"
 
-import { Dispatch, SetStateAction } from "react";
-import { cn } from "@/lib/utils";
-import { Drawer } from "vaul";
-import * as Dialog from "@radix-ui/react-dialog";
-import useMediaQuery from "@/lib/hooks/use-media-query";
+import { Dispatch, SetStateAction } from "react"
+import { cn } from "@/lib/utils"
+import { Drawer } from "vaul"
+import * as Dialog from "@radix-ui/react-dialog"
+import useMediaQuery from "@/lib/hooks/use-media-query"
 
 export default function Modal({
   children,
@@ -17,7 +17,7 @@ export default function Modal({
   showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
 }) {
-  const { isMobile } = useMediaQuery();
+  const { isMobile } = useMediaQuery()
 
   if (isMobile) {
     return (
@@ -38,7 +38,7 @@ export default function Modal({
           <Drawer.Overlay />
         </Drawer.Portal>
       </Drawer.Root>
-    );
+    )
   }
   return (
     <Dialog.Root open={showModal} onOpenChange={setShowModal}>
@@ -60,5 +60,5 @@ export default function Modal({
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
-  );
+  )
 }

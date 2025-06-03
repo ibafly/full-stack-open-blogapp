@@ -1,4 +1,4 @@
-import { type FormData } from "@/components/home/add-blog-form";
+import { type FormData } from "@/components/home/add-blog-form"
 
 export interface BlogData extends FormData {
     id: string;
@@ -14,11 +14,11 @@ export interface BlogData extends FormData {
 }
 
 export default function BlogEntry({
-    blog,
-    toggleBtnOnClick,
-    opAfterLikeBtnOnClick,
-    opAfterRemoveBtnOnClick,
-    showRemoveBtn,
+  blog,
+  toggleBtnOnClick,
+  opAfterLikeBtnOnClick,
+  opAfterRemoveBtnOnClick,
+  showRemoveBtn,
 }: {
     blog: BlogData;
     toggleBtnOnClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -27,44 +27,44 @@ export default function BlogEntry({
     showRemoveBtn?: boolean;
 
 }) {
-    const likeBtnOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        const blogId = event.currentTarget.closest('[data-id]')?.getAttribute("data-id");
-        opAfterLikeBtnOnClick(blogId || ''); // 处理可能的null值
-    }
-    const removeBtnOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        const blogId = event.currentTarget.closest('[data-id]')?.getAttribute("data-id");
-        opAfterRemoveBtnOnClick(blogId || '')
-    }
-    const blogStyle = {
-        paddingTop: 10,
-        paddingLeft: 2,
-        border: "solid 1px black",
-        marginBottom: 5,
-    }
-    return (
-        <li data-id={blog.id} style={blogStyle}>
-            {blog.title} {blog.author}
-            <button className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" onClick={toggleBtnOnClick}>
-                {blog.toggle ? "hide" : "view"}
-            </button>
-            <div
-                style={{ display: blog.toggle ? "" : "none" }}
-                className={"togglableContent"}
-            >
-                <div>{blog.url}</div>
-                <div>
+  const likeBtnOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const blogId = event.currentTarget.closest("[data-id]")?.getAttribute("data-id")
+    opAfterLikeBtnOnClick(blogId || "") // 处理可能的null值
+  }
+  const removeBtnOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const blogId = event.currentTarget.closest("[data-id]")?.getAttribute("data-id")
+    opAfterRemoveBtnOnClick(blogId || "")
+  }
+  const blogStyle = {
+    paddingTop: 10,
+    paddingLeft: 2,
+    border: "solid 1px black",
+    marginBottom: 5,
+  }
+  return (
+    <li data-id={blog.id} style={blogStyle}>
+      {blog.title} {blog.author}
+      <button className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" onClick={toggleBtnOnClick}>
+        {blog.toggle ? "hide" : "view"}
+      </button>
+      <div
+        style={{ display: blog.toggle ? "" : "none" }}
+        className={"togglableContent"}
+      >
+        <div>{blog.url}</div>
+        <div>
                     likes: {blog.likes}
-                    <button className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" onClick={likeBtnOnClick}>
+          <button className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" onClick={likeBtnOnClick}>
                         like
-                    </button>
-                </div>
-                {typeof blog.userId === 'object' && <div>{blog.userId.name}</div>}
-                {showRemoveBtn && (
-                    <button className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" onClick={removeBtnOnClick}>
+          </button>
+        </div>
+        {typeof blog.userId === "object" && <div>{blog.userId.name}</div>}
+        {showRemoveBtn && (
+          <button className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" onClick={removeBtnOnClick}>
                         remove
-                    </button>
-                )}
-            </div>
-        </li>
-    )
+          </button>
+        )}
+      </div>
+    </li>
+  )
 }

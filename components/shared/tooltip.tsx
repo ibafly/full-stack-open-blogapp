@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { ReactNode } from "react";
-import * as TooltipPrimitive from "@radix-ui/react-tooltip";
-import { Drawer } from "vaul";
-import useMediaQuery from "@/lib/hooks/use-media-query";
+import { ReactNode } from "react"
+import * as TooltipPrimitive from "@radix-ui/react-tooltip"
+import { Drawer } from "vaul"
+import useMediaQuery from "@/lib/hooks/use-media-query"
 
 export default function Tooltip({
   children,
@@ -14,7 +14,7 @@ export default function Tooltip({
   content: ReactNode | string;
   fullWidth?: boolean;
 }) {
-  const { isMobile } = useMediaQuery();
+  const { isMobile } = useMediaQuery()
 
   if (isMobile) {
     return (
@@ -22,7 +22,7 @@ export default function Tooltip({
         <Drawer.Trigger
           className={`${fullWidth ? "w-full" : "inline-flex"} md:hidden`}
           onClick={(e) => {
-            e.stopPropagation();
+            e.stopPropagation()
           }}
         >
           {children}
@@ -46,7 +46,7 @@ export default function Tooltip({
           <Drawer.Overlay />
         </Drawer.Portal>
       </Drawer.Root>
-    );
+    )
   }
   return (
     <TooltipPrimitive.Provider delayDuration={100}>
@@ -54,9 +54,9 @@ export default function Tooltip({
         <TooltipPrimitive.Trigger className="hidden md:inline-flex" asChild>
           {children}
         </TooltipPrimitive.Trigger>
-        {/* 
-            We don't use TooltipPrimitive.Portal here because for some reason it 
-            prevents you from selecting the contents of a tooltip when used inside a modal 
+        {/*
+            We don't use TooltipPrimitive.Portal here because for some reason it
+            prevents you from selecting the contents of a tooltip when used inside a modal
         */}
         <TooltipPrimitive.Content
           sideOffset={8}
@@ -73,5 +73,5 @@ export default function Tooltip({
         </TooltipPrimitive.Content>
       </TooltipPrimitive.Root>
     </TooltipPrimitive.Provider>
-  );
+  )
 }

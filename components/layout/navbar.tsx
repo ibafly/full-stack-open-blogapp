@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import Image from "next/image";
-import Link from "next/link";
-import useScroll from "@/lib/hooks/use-scroll";
+import Image from "next/image"
+import Link from "next/link"
+import useScroll from "@/lib/hooks/use-scroll"
 // import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 // import { LayoutDashboard } from "lucide-react";
 
 export default function NavBar() {
-  const scrolled = useScroll(50);
+  const scrolled = useScroll(50)
 
   return (
     <>
@@ -51,5 +51,5 @@ export default function NavBar() {
         </div>
       </div>
     </>
-  );
+  )
 }

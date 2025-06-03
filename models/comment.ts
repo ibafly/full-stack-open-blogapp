@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+import mongoose from "mongoose"
 
 const commentSchema = new mongoose.Schema({
   content: String,
@@ -12,4 +12,4 @@ commentSchema.set("toJSON", {
   },
 })
 
-module.exports = mongoose.models.Comment || mongoose.model("Comment", commentSchema)
+export default mongoose.models.Comment || mongoose.model("Comment", commentSchema)

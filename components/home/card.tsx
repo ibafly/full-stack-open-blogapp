@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import ReactMarkdown from "react-markdown";
+import { ReactNode } from "react"
+import ReactMarkdown from "react-markdown"
 
 export default function Card({
   title,
@@ -48,5 +48,5 @@ export default function Card({
         </div>
       </div>
     </div>
-  );
+  )
 }

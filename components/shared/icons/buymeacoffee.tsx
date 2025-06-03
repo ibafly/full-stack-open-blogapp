@@ -65,5 +65,5 @@ export default function BuyMeACoffee({ className }: { className?: string }) {
         fill="#0D0C22"
       ></path>
     </svg>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { BuyMeACoffee } from "../shared/icons";
+import { BuyMeACoffee } from "../shared/icons"
 
 export default function Footer() {
   return (
@@ -24,5 +24,5 @@ export default function Footer() {
         <p className="font-medium text-gray-600">Buy Steven(Precedent creator) a coffee</p>
       </a>
     </div>
-  );
+  )
 }
