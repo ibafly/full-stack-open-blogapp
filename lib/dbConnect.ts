@@ -2,7 +2,7 @@
 import mongoose from "mongoose"
 
 declare global {
-    var mongoose: { conn: any; promise: any } | undefined
+  var mongoose: { conn: any; promise: any } | undefined
 }
 
 const MONGO_URL = process.env.MONGODB_URI
@@ -17,6 +17,10 @@ export default async function dbConnect() {
   if (!cached.promise && MONGO_URL) {
     cached.promise = mongoose.connect(MONGO_URL, {
       bufferCommands: false, // Disable mongoose buffering
+      maxPoolSize: 10, // 连接池大小
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+      heartbeatFrequencyMS: 10000 // 每10秒心跳检测
     })
       .then(mongoose => mongoose)
       .then(() => {

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { verifySessionOrToken } from "@/lib/dal"
+import connectDb from "@/lib/dbConnect"
 
 import Blog from "@/models/blog"
 import User from "@/models/user"
@@ -11,7 +12,7 @@ import User from "@/models/user"
 // }
 
 export async function GET(request: NextRequest) {
-
+  await connectDb()
   const blogs = await Blog.find({}).populate("userId", "username name") // Blog.find({}) returns a Promise while await Blog.find({}) returns the result when find operation fullfilled // "username name" can be written as {username:1, name:1}
   console.log(blogs)
   //console.dir(blogs) // will show partial properties of an object
@@ -46,6 +47,7 @@ export async function POST(request: NextRequest) {
     )
   }
 
+  await connectDb()
   // in api/login/route.ts what jwt signed: { username: user.username, id: user._id }
   const user = await User.findById(userFromToken.id)
 
@@ -76,6 +78,7 @@ export async function DELETE(request: NextRequest,
   const { id } = await params
   const token = request.token
 
+  await connectDb()
   const blog = await Blog.findById(id)
   if (!blog) {
     return NextResponse.json(
@@ -121,6 +124,7 @@ export async function PUT(request: NextRequest,
 
   const { id } = await params
   const body = await request.json()
+  await connectDb()
   const result = await Blog.findByIdAndUpdate(id, body, { new: true }) // option new for pass updated result instead of the founded one
 
   if (result) {

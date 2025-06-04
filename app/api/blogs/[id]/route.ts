@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { verifySessionOrToken } from "@/lib/dal"
+import connectDb from "@/lib/dbConnect"
+
 import Blog from "@/models/blog"
 
 export async function GET(request: NextRequest,
@@ -15,6 +17,7 @@ export async function GET(request: NextRequest,
   }
 
   const { id } = await params
+  await connectDb()
   const blog = await Blog.findById(id).populate("commentIds", "content")
 
   if (blog) {
@@ -41,6 +44,7 @@ export async function PUT(
   const { id } = await params
   const body = await request.json()
 
+  await connectDb()
   // option new for pass updated result instead of the founded one
   const result = await Blog.findByIdAndUpdate(id, body, { new: true })
   if (!result) {
@@ -75,6 +79,7 @@ export async function DELETE(
   }
 
   const { id } = await params
+  await connectDb()
   const blog = await Blog.findById(id)
 
   if (!blog) {

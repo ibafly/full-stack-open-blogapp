@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { verifySessionOrToken } from "@/lib/dal"
+import connectDb from "@/lib/dbConnect"
+
 import Blog from "@/models/blog"
 import Comment from "@/models/comment"
 
@@ -17,6 +19,7 @@ export async function GET(request: NextRequest,
   }
 
   const { id } = await params
+  await connectDb()
   const blog = await Blog.findById(id).populate("commentIds", "content")
 
   if (blog) {
@@ -57,6 +60,7 @@ export async function POST(request: NextRequest,
     )
   }
 
+  await connectDb()
   const blog = await Blog.findById(id)
 
   if (!blog) {

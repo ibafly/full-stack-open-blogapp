@@ -7,6 +7,7 @@ import User from "@/models/user"
 
 export async function GET(request: Request) {
 
+  await connectDb()
   const users = await User.find({}).populate("blogIds", {
     title: 1,
     url: 1,
@@ -38,6 +39,7 @@ export async function POST(request: Request) {
     passwordHash,
   })
 
+  await connectDb()
   await newUser.save()
   return NextResponse.json(newUser, { status: 201 })
 
@@ -73,6 +75,7 @@ export async function PUT(request: NextRequest) {
   })
 
   const id = userFromToken.id
+  await connectDb()
   const updatedUser = await User.findByIdAndUpdate(id, body, { new: true }) // option new for return updated result instead of the founded one
   if (updatedUser) {
     return NextResponse.json(updatedUser, { status: 201 })
@@ -83,6 +86,7 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: Request) {
+  await connectDb()
   await User.deleteMany({})
   return NextResponse.json(null, { status: 204 })
 }
