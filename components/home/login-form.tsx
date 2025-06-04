@@ -1,7 +1,6 @@
 "use client"
 
 import Form from "@/components/shared/form"
-import { headers } from "next/headers"
 import {
   useState,
   Dispatch,
@@ -91,13 +90,13 @@ export default function LoginForm() {
     {
       name: "username",
       label: "Username",
-      children: (<input className={inputBoxCss} id="username" type="text" value={formData.username} onChange={handleChange} required />),
+      children: (<input className={inputBoxCss} id="username" type="text" autoComplete="username" value={formData.username} onChange={handleChange} required />),
       required: true,
     },
     {
       name: "password",
       label: "Password",
-      children: (<input className={inputBoxCss} id="password" type="password" value={formData.password} onChange={handleChange} required />),
+      children: (<input className={inputBoxCss} id="password" type="password" autoComplete="current-password" value={formData.password} onChange={handleChange} required />),
       required: true,
     },
   ]
