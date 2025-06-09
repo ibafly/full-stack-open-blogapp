@@ -3,14 +3,15 @@
 import Form from "@/components/shared/form"
 import {
   useState,
+  useEffect,
   Dispatch,
   SetStateAction,
 } from "react"
 import { useRouter } from "next/navigation"
 
 interface FormData {
-    username: string;
-    password: string;
+  username: string;
+  password: string;
 }
 
 export default function LoginForm() {
@@ -21,6 +22,23 @@ export default function LoginForm() {
   const [msg, setMsg] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+
+  useEffect(() => {
+
+    setTimeout(() => {
+      const autofilledInputs = document.querySelectorAll('input:-webkit-autofill');
+      if (autofilledInputs.length > 0) {
+        console.log('检测到自动填充');
+        autofilledInputs.forEach(input => {
+          const { name, value } = input as HTMLInputElement;
+          setFormData(prev => ({ ...prev, [name]: value }));
+          console.log(`Auto-filled ${name}: ${value}`);
+        })
+      }
+    }, 300);
+
+  }, [])
+
 
 
   const inputBoxCss = "box-border inline-flex w-full appearance-none items-center justify-center rounded px-2.5 leading-none shadow-[0_0_0_1px] shadow-blue-200 outline-none hover:shadow-[0_0_0_1px_black] focus:shadow-[0_0_0_2px_black]"
