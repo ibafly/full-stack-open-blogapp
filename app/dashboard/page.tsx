@@ -10,9 +10,9 @@ import BlogEntry, { type BlogData } from "@/components/home/blog-entry"
 // import { getSession } from 'next-auth/react';
 
 interface User {
-    username: string;
-    userId: string;
-    name: string;
+  username: string;
+  userId: string;
+  name: string;
 }
 
 
@@ -30,7 +30,7 @@ export default function Dashboard() {
     const loggedUser = getCookie("logged-user")
       ? JSON.parse(getCookie("logged-user") as string)
       : null
-      
+
 
     if (loggedUser) {
       setUser(loggedUser)
@@ -47,7 +47,13 @@ export default function Dashboard() {
         .catch(err => {
           console.log(err)
         })
-    }
+    } 
+    // // put random access redirect logic to middleware.ts
+    // else {
+    //   console.log("no logged user found, redirect to login(home) page")
+    //   router.push("/")
+    // }
+
   }, [])
 
 
@@ -170,7 +176,7 @@ export default function Dashboard() {
       <h3>
         {user ? user.name : ""} logged in
         <button type="button" onClick={handleLogout} className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
-                    logout
+          logout
         </button>
       </h3>
       <h2>create new</h2>
@@ -182,8 +188,8 @@ export default function Dashboard() {
         <button onClick={() => {
           togglableBlogFormRef.current?.toggleVisibility()
         }}
-        className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
-                    Cancel
+          className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
+          Cancel
         </button>
 
       </Togglable >
@@ -191,16 +197,16 @@ export default function Dashboard() {
         {[...blogs]
           .sort((blogA, blogB) => blogB.likes - blogA.likes)
           .map(blog => (
-              <BlogEntry
-                key={blog.id}
-                blog={blog}
-                toggleBtnOnClick={changeBlogToggle}
-                opAfterLikeBtnOnClick={plusOneLike}
-                opAfterRemoveBtnOnClick={deleteBlog}
-                showRemoveBtn={
-                  blog.userId && user?.userId && typeof blog.userId === "object" && blog.userId.id === user.userId ? true : false
-                }
-              />
+            <BlogEntry
+              key={blog.id}
+              blog={blog}
+              toggleBtnOnClick={changeBlogToggle}
+              opAfterLikeBtnOnClick={plusOneLike}
+              opAfterRemoveBtnOnClick={deleteBlog}
+              showRemoveBtn={
+                blog.userId && user?.userId && typeof blog.userId === "object" && blog.userId.id === user.userId ? true : false
+              }
+            />
           ))}
       </ul>
     </>

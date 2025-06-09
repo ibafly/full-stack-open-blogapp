@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { RequestLogger } from '@/lib/requestLogger'
 import { v4 as uuidv4 } from 'uuid'
+import { log } from 'node:console'
 
 
 declare module 'next/server' {
@@ -34,6 +35,10 @@ export async function middleware(request: NextRequest) {
 
     RequestLogger.log(request, response, logMetadata)
 
+    // random access redirect to home page
+    if (request.nextUrl.pathname.startsWith('/dashboard') && !request.cookies.get('auth-token')) {
+        return Response.redirect(new URL('/', request.url));
+    }
 
     // token extractor
     // const authHeader = request.headers.get('authorization')
@@ -46,6 +51,7 @@ export async function middleware(request: NextRequest) {
     // }
 
     // request.token = token
+
 
     // const [tokenType, tokenValue] = request.headers.get('authorization')?.split(' ')
     const splittedToken = request.headers.get('authorization')?.split(' ')
@@ -64,11 +70,8 @@ export async function middleware(request: NextRequest) {
     //     request.token = tokenValue
     // }
 
-    return NextResponse.next()
 
-    // return response
-
-    // return NextResponse.redirect(new URL('/home', request.url))
+    return response
 }
 
 export const config = {
