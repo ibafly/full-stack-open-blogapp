@@ -1,16 +1,16 @@
 import { type FormData } from "@/components/home/add-blog-form"
 
 export interface BlogData extends FormData {
+  id: string;
+  // userId: string;
+  userId: string | {
+    username: string;
     id: string;
-    // userId: string;
-    userId: string | {
-        username: string;
-        id: string;
-        name: string;
-    };
-    commentIds: string[] | [];
-    likes: number;
-    toggle?: boolean; // for togglable blog form
+    name: string;
+  };
+  commentIds: string[] | [];
+  likes: number;
+  toggle?: boolean; // for togglable blog form
 }
 
 export default function BlogEntry({
@@ -20,11 +20,11 @@ export default function BlogEntry({
   opAfterRemoveBtnOnClick,
   showRemoveBtn,
 }: {
-    blog: BlogData;
-    toggleBtnOnClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    opAfterLikeBtnOnClick: (blogId: string) => Promise<void>;
-    opAfterRemoveBtnOnClick: (blogId: string) => Promise<void>;
-    showRemoveBtn?: boolean;
+  blog: BlogData;
+  toggleBtnOnClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  opAfterLikeBtnOnClick: (blogId: string) => Promise<void>;
+  opAfterRemoveBtnOnClick: (blogId: string) => Promise<void>;
+  showRemoveBtn?: boolean;
 
 }) {
   const likeBtnOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -52,18 +52,20 @@ export default function BlogEntry({
         className={"togglableContent"}
       >
         <div>{blog.url}</div>
-        <div>
-                    likes: {blog.likes}
-          <button className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" onClick={likeBtnOnClick}>
-                        like
+        <div className="inline-flex justify-between items-center w-full">
+          Likes: {blog.likes}
+          <button className="space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" onClick={likeBtnOnClick}>
+            👍
           </button>
         </div>
-        {typeof blog.userId === "object" && <div>{blog.userId.name}</div>}
-        {showRemoveBtn && (
-          <button className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" onClick={removeBtnOnClick}>
-                        remove
-          </button>
-        )}
+        <div className="inline-flex justify-between items-center w-full mt-2">
+          {typeof blog.userId === "object" && <div>Uploader: {blog.userId.name}</div>}
+          {showRemoveBtn && (
+            <button className="space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" onClick={removeBtnOnClick}>
+              🗑
+            </button>
+          )}
+        </div>
       </div>
     </li>
   )

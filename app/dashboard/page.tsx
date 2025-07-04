@@ -47,7 +47,7 @@ export default function Dashboard() {
         .catch(err => {
           console.log(err)
         })
-    } 
+    }
     // // put random access redirect logic to middleware.ts
     // else {
     //   console.log("no logged user found, redirect to login(home) page")
@@ -170,29 +170,19 @@ export default function Dashboard() {
 
 
   return (
-    <>
-      <h2>Blog Pool</h2>
+    <div className="mt-10 grid grid-cols-1 md:grid-cols-[auto_250px] gap-4 bg-gray-200 p-4">
+      <h2 className="text-2xl font-semibold">Blog Pool</h2>
       {/* <Notification message={msg} /> */}
-      <h3>
-        {user ? user.name : ""} logged in
-        <button type="button" onClick={handleLogout} className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
-          logout
-        </button>
+      <h3 className="justify-self-end">
+        {user ? user.name : "Guest"}
+        {user ?
+          <button type="button" onClick={handleLogout} className="mx-auto ml-2 inline-flex items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
+            Sign out
+          </button>
+          : ""}
       </h3>
-      <h2>create new</h2>
-      <Togglable btnLabel={"create new blog"} ref={togglableBlogFormRef}>
-        <AddBlogForm
-          opAfterSubmit={addBlog} // do operation after form on submit
-        />
 
-        <button onClick={() => {
-          togglableBlogFormRef.current?.toggleVisibility()
-        }}
-          className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
-          Cancel
-        </button>
 
-      </Togglable >
       <ul>
         {[...blogs]
           .sort((blogA, blogB) => blogB.likes - blogA.likes)
@@ -209,6 +199,18 @@ export default function Dashboard() {
             />
           ))}
       </ul>
-    </>
+
+      <Togglable btnLabel={"create new blog"} ref={togglableBlogFormRef}>
+        <button onClick={() => {
+          togglableBlogFormRef.current?.toggleVisibility()
+        }}
+          className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
+          ×
+        </button>
+        <AddBlogForm
+          opAfterSubmit={addBlog} // do operation after form on submit
+        />
+      </Togglable >
+    </div>
   )
 }
