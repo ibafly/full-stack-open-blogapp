@@ -195,19 +195,19 @@ export default function LoginForm() {
     {
       name: "username",
       label: "Username",
-      children: (<input className={inputBoxCss} id="new-username" type="text" value={formDataForSignUp.username} onChange={handleChangeForSignUp} required />),
+      children: (<input className={inputBoxCss} id="new-username" type="text" autoComplete="off" value={formDataForSignUp.username} onChange={handleChangeForSignUp} required />),
       required: true,
     },
     {
       name: "name",
       label: "Name",
-      children: (<input className={inputBoxCss} id="new-name" type="text" value={formDataForSignUp.name} onChange={handleChangeForSignUp} required />),
+      children: (<input className={inputBoxCss} id="new-name" type="text" autoComplete="off" value={formDataForSignUp.name} onChange={handleChangeForSignUp} required />),
       required: true,
     },
     {
       name: "password",
       label: "Password",
-      children: (<input className={inputBoxCss} id="new-password" type="password" value={formDataForSignUp.password} onChange={handleChangeForSignUp} required />),
+      children: (<input className={inputBoxCss} id="new-password" type="password" autoComplete="new-password" value={formDataForSignUp.password} onChange={handleChangeForSignUp} required />),
       required: true,
     },
   ]
