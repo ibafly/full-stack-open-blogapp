@@ -13,10 +13,20 @@ interface FormData {
   username: string;
   password: string;
 }
+interface FormDataForSignUp {
+  username: string;
+  name: string;
+  password: string;
+}
 
 export default function LoginForm() {
   const [formData, setFormData] = useState<FormData>({
     username: "",
+    password: "",
+  })
+  const [formDataForSignUp, setFormDataForSignUp] = useState<FormDataForSignUp>({
+    username: "",
+    name: "",
     password: "",
   })
   const [msg, setMsg] = useState<string | null>(null)
@@ -45,6 +55,10 @@ export default function LoginForm() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
+  }
+  const handleChangeForSignUp = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormDataForSignUp(prev => ({ ...prev, [name]: value }))
   }
 
 
@@ -104,6 +118,63 @@ export default function LoginForm() {
     }
   }
 
+
+  const handleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setMsg(null)
+    setIsLoading(true)
+
+    try {
+      //   const returnedUser = await loginService.login({ username, password })
+      const res = await fetch("/api/users",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formDataForSignUp),
+        }
+      )
+
+      console.log(res)
+      const data = await res.json()
+      console.log(data)
+
+      if (!res.ok || !data.userId) {
+        throw new Error("failed to sign up")
+      }
+
+      // const { token, ...loggedUser } = data
+      // const loggedUser = data
+
+      // setUser(data)
+      // window.localStorage.setItem("loggedUser", JSON.stringify(loggedUser))
+
+      // blogService.setToken(returnedUser.token)
+
+      setMsg(`a new user ${data.username} created successfully. Please login.`)
+      setTimeout(() => {
+        setMsg(null)
+      }, 5000)
+
+      setFormDataForSignUp(
+        {
+          username: "",
+          name: "",
+          password: "",
+        }
+      )
+    } catch (excep) {
+      // setMsg("wrong credentials (username or password)", excep)
+      setMsg(excep instanceof Error ? excep.message : "unknown error")
+      setTimeout(() => {
+        setMsg(null)
+      }, 5000)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   const fields = [
     {
       name: "username",
@@ -119,8 +190,33 @@ export default function LoginForm() {
     },
   ]
 
+
+  const fieldsForSignUp = [
+    {
+      name: "username",
+      label: "Username",
+      children: (<input className={inputBoxCss} id="new-username" type="text" value={formDataForSignUp.username} onChange={handleChangeForSignUp} required />),
+      required: true,
+    },
+    {
+      name: "name",
+      label: "Name",
+      children: (<input className={inputBoxCss} id="new-name" type="text" value={formDataForSignUp.name} onChange={handleChangeForSignUp} required />),
+      required: true,
+    },
+    {
+      name: "password",
+      label: "Password",
+      children: (<input className={inputBoxCss} id="new-password" type="password" value={formDataForSignUp.password} onChange={handleChangeForSignUp} required />),
+      required: true,
+    },
+  ]
+
   return (
-    <Form fields={fields} fireOnSubmit={handleLogin} submitButtonText={"Login"} isLoading={isLoading} />
+    <>
+      <Form fields={fields} fireOnSubmit={handleLogin} submitButtonText={"Login"} isLoading={isLoading} />
+      <Form fields={fieldsForSignUp} fireOnSubmit={handleSignUp} submitButtonText={"Sign Up"} isLoading={isLoading} />
+    </>
   )
 }
 

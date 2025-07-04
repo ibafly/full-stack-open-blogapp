@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
   await user.save({ validateBeforeSave: false })
 
   return NextResponse.json(
-    savedBlog,
+    await savedBlog.populate("userId", "username name"),
     { status: 201 }
   )
 }
