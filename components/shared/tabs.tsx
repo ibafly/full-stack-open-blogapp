@@ -5,15 +5,17 @@ import * as TabsPrimitive from "@radix-ui/react-tabs";
 
 export default function Tabs(
     {
+        className,
         ariaLabel,
         triggers
     }: {
+        className?: string,
         ariaLabel: string,
         triggers: { name: string, children: ReactNode }[]
     }
 ) {
     return (
-        <TabsPrimitive.Root className="flex w-full flex-col" defaultValue="tab1" orientation="horizontal">
+        <TabsPrimitive.Root className={`flex w-full flex-col ${className}`} defaultValue="tab1" orientation="horizontal">
             <TabsPrimitive.List className="flex shrink-0 border-b " aria-label={ariaLabel}>
                 {
                     triggers.map(({ name }, i) => (

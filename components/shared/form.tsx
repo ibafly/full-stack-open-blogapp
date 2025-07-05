@@ -35,7 +35,7 @@ export default function Form({
             {fields.map(({ name, label, children, required }) => (
                 <FormPrimitive.Field key={name} className="relative mb-2.5 grid" name={name}>
                     <div className="flex items-baseline justify-between">
-                        <FormPrimitive.Label className="leading-[35px] font-mono" htmlFor={name}>
+                        <FormPrimitive.Label className="leading-[30px] font-mono text-base" htmlFor={name}>
                             {label}
                         </FormPrimitive.Label>
                     </div>

@@ -47,7 +47,7 @@ export default async function Home() {
               {features[0].title}
             </h2>
           </div>
-          <div className="flex items-center justify-center">{<LoginTabs />}</div>
+          <div className="flex flex-col items-center justify-center">{<LoginTabs />}</div>
 
         </div>
       </div>

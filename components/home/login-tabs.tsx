@@ -2,6 +2,7 @@
 
 import Form from "@/components/shared/form"
 import Tabs from "@/components/shared/tabs"
+import Notification from "@/components/shared/notification"
 import {
   useState,
   useEffect,
@@ -142,7 +143,7 @@ export default function LoginTabs() {
       const data = await res.json()
       console.log(data)
 
-      if (!res.ok || !data.userId) {
+      if (!res.ok || !data.id) {
         throw new Error("failed to sign up")
       }
 
@@ -154,10 +155,10 @@ export default function LoginTabs() {
 
       // blogService.setToken(returnedUser.token)
 
-      setMsg(`a new user ${data.username} created successfully. Please login.`)
+      setMsg(`Welcome ${data.username}! Please login.`)
       setTimeout(() => {
         setMsg(null)
-      }, 5000)
+      }, 50000)
 
       setFormDataForSignUp(
         {
@@ -225,11 +226,15 @@ export default function LoginTabs() {
     }
   ]
 
+  // const msgClasseName = "absolute bg-gray-500 p-1.5 text-base font-bold text-green-500 border-4 border-solid rounded";
+  const msgClasseName = "-mt-4 z-10 text-sm text-green-500 ";
+
   return (
     <>
       {/* <Form fields={fields} fireOnSubmit={handleLogin} submitButtonText={"Login"} isLoading={isLoading} />
       <Form fields={fieldsForSignUp} fireOnSubmit={handleSignUp} submitButtonText={"Sign Up"} isLoading={isLoading} /> */}
-      <Tabs ariaLabel="login or sign up" triggers={triggers} />
+      <Tabs ariaLabel="login or sign up" triggers={triggers} className="relative" />
+      <Notification message={msg} className={msgClasseName} />
     </>
   )
 }
