@@ -1,7 +1,7 @@
 import Card from "@/components/home/card"
 import { DEPLOY_URL } from "@/lib/constants"
 import { Github, Twitter } from "@/components/shared/icons"
-import LoginForm from "@/components/home/login-form"
+import LoginTabs from "@/components/home/login-tabs"
 import ComponentGrid from "@/components/home/component-grid"
 import Image from "next/image"
 import { nFormatter } from "@/lib/utils"
@@ -42,14 +42,12 @@ export default async function Home() {
           className={`relative col-span-1 md:col-start-2 h-96 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md
       }`}
         >
-          <div className="mt-10 mb-4 mx-auto max-w-lg text-center">
+          <div className="mx-auto max-w-lg text-center">
             <h2 className="bg-gradient-to-br from-black to-stone-500 bg-clip-text font-display text-xl font-bold text-transparent [text-wrap:balance] md:text-3xl md:font-normal">
               {features[0].title}
             </h2>
-            <div className="prose-sm mt-3 leading-normal text-gray-500 [text-wrap:balance] md:prose">
-            </div>
           </div>
-          <div className="flex h-60 items-center justify-center">{<LoginForm />}</div>
+          <div className="flex items-center justify-center">{<LoginTabs />}</div>
 
         </div>
       </div>
@@ -138,11 +136,11 @@ export default async function Home() {
 
 const features = [
   {
-    title: "Welcome",
+    title: "",
     description:
-      "Input form to log in to blog pool.",
+      "Input form to log in or sign up to blog pool.",
     large: false,
-    demo: <LoginForm />,
+    demo: <LoginTabs />,
   },
   {
     title: "Components",

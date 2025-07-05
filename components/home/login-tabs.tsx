@@ -1,11 +1,13 @@
 "use client"
 
 import Form from "@/components/shared/form"
+import Tabs from "@/components/shared/tabs"
 import {
   useState,
   useEffect,
   Dispatch,
   SetStateAction,
+  Children,
 } from "react"
 import { useRouter } from "next/navigation"
 
@@ -19,7 +21,7 @@ interface FormDataForSignUp {
   password: string;
 }
 
-export default function LoginForm() {
+export default function LoginTabs() {
   const [formData, setFormData] = useState<FormData>({
     username: "",
     password: "",
@@ -212,10 +214,22 @@ export default function LoginForm() {
     },
   ]
 
+  const triggers = [
+    {
+      name: "Login",
+      children: (<Form fields={fields} fireOnSubmit={handleLogin} submitButtonText={"Login"} isLoading={isLoading} />)
+    },
+    {
+      name: "Sign up",
+      children: (<Form fields={fieldsForSignUp} fireOnSubmit={handleSignUp} submitButtonText={"Sign Up"} isLoading={isLoading} />)
+    }
+  ]
+
   return (
     <>
-      <Form fields={fields} fireOnSubmit={handleLogin} submitButtonText={"Login"} isLoading={isLoading} />
-      <Form fields={fieldsForSignUp} fireOnSubmit={handleSignUp} submitButtonText={"Sign Up"} isLoading={isLoading} />
+      {/* <Form fields={fields} fireOnSubmit={handleLogin} submitButtonText={"Login"} isLoading={isLoading} />
+      <Form fields={fieldsForSignUp} fireOnSubmit={handleSignUp} submitButtonText={"Sign Up"} isLoading={isLoading} /> */}
+      <Tabs ariaLabel="login or sign up" triggers={triggers} />
     </>
   )
 }
