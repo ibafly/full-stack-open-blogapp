@@ -24,7 +24,7 @@ const Togglable = forwardRef<ToggleRef, PropsWithChildren<{ btnLabel: string }>>
 
   return (
     <div>
-      <button onClick={toggleVisibility} style={hideWhenVisible} className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
+      <button onClick={toggleVisibility} style={hideWhenVisible} className="mx-auto inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
         {btnLabel}
       </button>
       <div style={showWhenVisible}>{children}</div>
