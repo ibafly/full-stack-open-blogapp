@@ -1,5 +1,5 @@
 import { type FormData } from "@/components/home/add-blog-form"
-import { ChevronDown } from "lucide-react"
+import { ThumbsUp, Trash2, Link, ChevronDown } from "lucide-react"
 
 export interface BlogData extends FormData {
   id: string;
@@ -39,7 +39,12 @@ export default function BlogEntry({
 
 
   return (
-    <li data-id={blog.id} className="flex items-center p-6 mx-8 border-b border-l border-r hover:bg-blue-200">
+    <li data-id={blog.id} className="flex items-center p-6 mx-8 border-b 
+     hover:bg-gradient-to-r 
+  hover:from-transparent 
+  hover:via-indigo-100 
+  hover:to-transparent
+    ">
       <div className="flex grow items-center overflow-hidden p-4">
         <div className="mr-4 w-[200px] shrink-0">
           <span className="truncate font-medium">
@@ -50,9 +55,14 @@ export default function BlogEntry({
           <span className="mr-2 max-w-[400px] min-w-[175px] truncate font-medium">
             {blog.author}
           </span>
-          <span className="truncate text-gray-600">
-            {blog.url}
-          </span>
+          {/* ensure url starts with http:// or https:// */}
+          <a href={/^https?:\/\//i.test(blog.url) ? blog.url : `https://${blog.url.replace(/^\//, '').trim()}`}
+            target="_blank" rel="noopener noreferrer" className="flex items-center space-x-1 text-sm text-blue-600 hover:underline">
+            <Link className="h-4 w-4 mt-1" />
+            <span className="truncate text-gray-600">
+              {blog.url}
+            </span>
+          </a>
         </div>
       </div>
 
@@ -61,12 +71,12 @@ export default function BlogEntry({
         <button className="mx-auto mt-2 inline-flex shrink-0 justify-end items-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" onClick={toggleBtnOnClick}>
           {/* {blog.toggle ? "hide" : "view"} */}
           <span className="pointer-events-none">
-          more
+            more
           </span>
           <ChevronDown
             // USE pointer-events: none
             // to ensure the icon can be clicked to trigger button
-            className={`pointer-events-none h-4 w-4 mt-1 transition-all ${blog.toggle ? "rotate-180" : ""
+            className={`pointer-events-none relative h-4 w-4 top-[2px] transition-all ${blog.toggle ? "rotate-180" : ""
               }`}
           />
         </button>
@@ -74,26 +84,26 @@ export default function BlogEntry({
 
         <div
           style={{ display: blog.toggle ? "" : "none" }}
-          className={"togglableContent absolute top-14 right-0 whitespace-pre"}
+          className={"togglableContent absolute top-14 right-0 whitespace-pre inline-flex items-center"}
         >
-          <span className="mr-2">
-            {typeof blog.userId === "object" &&
-              !showRemoveBtn &&
-              <span className="text-sm text-gray-500">
-                OP: {blog.userId.name}
-              </span>}
 
-            {showRemoveBtn && (
-              <button className="space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" onClick={removeBtnOnClick}>
-                🗑
-              </button>
-            )}
-          </span>
-          <span className="inline">
-            <button className="whitespace-pre space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" onClick={likeBtnOnClick}>
-              {blog.likes} 👍
+          {showRemoveBtn ? (
+            <button className="inline-flex items-center mr-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" onClick={removeBtnOnClick}>
+              {/* {"\u200B"} is zero-width blankspace inserted here to ensure the button has a text line height (which is higher than the icon) */}
+              <span>{"\u200B"}</span>
+              <Trash2 className="h-4 w-4 text-red-500" />
             </button>
-          </span>
+          ) : typeof blog.userId === "object" && (
+            <span className="mr-2 text-sm text-gray-500">
+              OP: {blog.userId.name}
+            </span>
+          )}
+
+          <button className="inline-flex items-center space-x-1 whitespace-pre space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" onClick={likeBtnOnClick}>
+            <span className="">{blog.likes}</span>
+            <ThumbsUp className="inline h-4 w-4 text-green-500" />
+          </button>
+
         </div>
       </div>
 
