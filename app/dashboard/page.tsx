@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation"
 import { useEffect, useState, useRef } from "react"
 import { getCookie } from "cookies-next/client"
+import ScrollArea from "@/components/shared/scrollArea"
 import Togglable, { type ToggleRef } from "@/components/shared/togglable"
 import AddBlogForm, { type FormData } from "@/components/home/add-blog-form"
 import BlogEntry, { type BlogData } from "@/components/home/blog-entry"
@@ -210,24 +211,26 @@ export default function Dashboard() {
             </div>
 
             {/* --Left Entry List */}
-            <div className="h-[calc(100vh-8rem)] overflow-auto">
-              <ul className="pb-8">
-                {[...blogs]
-                  .sort((blogA, blogB) => blogB.likes - blogA.likes)
-                  .map(blog => (
-                    <BlogEntry
-                      key={blog.id}
-                      blog={blog}
-                      toggleBtnOnClick={changeBlogToggle}
-                      opAfterLikeBtnOnClick={plusOneLike}
-                      opAfterRemoveBtnOnClick={deleteBlog}
-                      showRemoveBtn={
-                        blog.userId && user?.userId && typeof blog.userId === "object" && blog.userId.id === user.userId ? true : false
-                      }
-                    />
-                  ))}
-              </ul>
-            </div>
+            <ScrollArea children={
+              // <div className="h-[calc(100vh-8rem)] overflow-auto">
+                <ul className="pb-8">
+                  {[...blogs]
+                    .sort((blogA, blogB) => blogB.likes - blogA.likes)
+                    .map(blog => (
+                      <BlogEntry
+                        key={blog.id}
+                        blog={blog}
+                        toggleBtnOnClick={changeBlogToggle}
+                        opAfterLikeBtnOnClick={plusOneLike}
+                        opAfterRemoveBtnOnClick={deleteBlog}
+                        showRemoveBtn={
+                          blog.userId && user?.userId && typeof blog.userId === "object" && blog.userId.id === user.userId ? true : false
+                        }
+                      />
+                    ))}
+                </ul>
+              // </div>
+            } />
 
           </div>
         </div>
@@ -254,7 +257,7 @@ export default function Dashboard() {
               <button onClick={() => {
                 togglableBlogFormRef.current?.toggleVisibility()
               }}
-                className="mx-auto mb-4 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
+                className="mx-auto mb-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
                 ×
               </button>
               <div className="flex justify-center">
