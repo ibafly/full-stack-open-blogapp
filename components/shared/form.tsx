@@ -2,8 +2,8 @@
 
 import { FormEvent, Children, Dispatch, ReactNode, SetStateAction } from "react"
 import * as FormPrimitive from "@radix-ui/react-form"
-// import { Drawer } from "vaul";
-// import useMediaQuery from "@/lib/hooks/use-media-query";
+
+import { Loader } from "lucide-react"
 
 interface Field {
     name: string;
@@ -53,7 +53,13 @@ export default function Form({
 
             <FormPrimitive.Submit asChild>
                 <button type="submit" className="mx-auto mt-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black" disabled={isLoading}>
-                    {submitButtonText}
+                    {/* {isLoading && */}
+                    {/* <Loader size={20} /> */}
+                    {/* } */}
+
+                    {isLoading ? <Loader size={20} /> : submitButtonText}
+                    
+                    {/* {submitButtonText} */}
                 </button>
             </FormPrimitive.Submit>
         </FormPrimitive.Root>

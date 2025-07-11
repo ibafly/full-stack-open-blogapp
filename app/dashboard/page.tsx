@@ -5,10 +5,14 @@ import { useEffect, useState, useRef } from "react"
 import { getCookie } from "cookies-next/client"
 import ScrollArea from "@/components/shared/scrollArea"
 import Togglable, { type ToggleRef } from "@/components/shared/togglable"
+import Modal from "@/components/shared/modal"
+import NavMenu from "@/components/home/nav-menu"
 import AddBlogForm, { type FormData } from "@/components/home/add-blog-form"
 import BlogEntry, { type BlogData } from "@/components/home/blog-entry"
 // import { GetServerSideProps } from 'next';
 // import { getSession } from 'next-auth/react';
+
+import { User, ScrollText, SquarePen, LogOut, PenSquare } from "lucide-react"
 
 interface User {
   username: string;
@@ -20,6 +24,7 @@ interface User {
 export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null)
   const [blogs, setBlogs] = useState<BlogData[]>([])
+  const [showPostModal, setShowPostModal] = useState<boolean>(false)
   const togglableBlogFormRef = useRef<ToggleRef>(null)
   const router = useRouter()
 
@@ -91,7 +96,8 @@ export default function Dashboard() {
           console.log(err)
         })
 
-      togglableBlogFormRef.current?.toggleVisibility() // fold blog form after successfully create a blog
+      togglableBlogFormRef.current?.toggleVisibility() // fold blog form after successfully post s link
+      showPostModal && setShowPostModal(false) // close post modal after successfully posting a link
 
       // setMsg(`a new blog ${blog.title} by ${blog.author} added`)
       // setTimeout(() => {
@@ -99,7 +105,7 @@ export default function Dashboard() {
       // }, 5000)
     } catch (excep) {
       console.log("exception:", excep)
-    }
+    } 
   }
 
   const changeBlogToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -178,42 +184,66 @@ export default function Dashboard() {
       <div className="grow overflow-hidden">
 
         {/* -Left Sidebar */}
-        <div className="flex h-screen bg-blue-50">
+        <div className="flex h-screen">
           <div className="grow overflow-hidden border-r border-gray-200">
 
             {/* --Left Header */}
             <div className="flex h-16 items-center justify-between border-b border-gray-200 p-4">
-              <div className="flex items-center">
-                {/* <NavMenu /> */}
-                <h1 className="flex items-center text-xl font-semibold capitalize">
-                  {/* {folderName} */}
+              <h1 className="flex items-center space-x-1 shrink-0 text-xl font-semibold capitalize">
+                {/* {folderName} */}
+                <ScrollText size={30} />
+                <span>
                   Blog Pool
-                  <span className="ml-2 text-sm text-gray-400">
-                    {/* {count} */}
-                    {blogs.length}
-                  </span>
-                </h1>
-              </div>
-              <div className="flex items-center space-x-2">
-                {/* <Link
-            href={`/f/${folderName}/new`}
-            className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
-          >
-            <PenSquare size={18} />
-          </Link>
-          <Link
-            href="/search"
-            className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
-          >
-            <Search size={18} />
-          </Link> */}
-              </div>
+                </span>
+                <span className="ml-2 text-sm text-gray-400">
+                  {/* {count} */}
+                  {blogs.length}
+                </span>
+              </h1>
+
+              <NavMenu className="justify-end md:hidden"
+                barSide="right"
+                headerNode={
+                  < h1 className="justify-self-end flex items-center space-x-1 text-xl font-bold">
+                    <User size={30} />
+                    <span>
+                      {user ? user.name : "Guest"}
+                    </span>
+                  </h1>
+                }
+                actionsNode={
+                  <button type="button" onClick={handleLogout} className="flex items-center space-x-2   rounded p-2 text-gray-700 hover:bg-gray-100">
+                    <LogOut size={20} />
+                    <span className="pointer-events-none">
+                      Sign out
+                    </span>
+                  </button>
+                }
+              />
+
+              {/* <div className="flex items-center space-x-2">
+                <Link
+                  href={`/f/${folderName}/new`}
+                  className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
+                >
+                  <PenSquare size={18} />
+                </Link>
+                <Link
+                  href="/search"
+                  className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
+                >
+                  <Search size={18} />
+                </Link>
+              </div> */}
             </div>
 
             {/* --Left Entry List */}
-            <ScrollArea children={
-              // <div className="h-[calc(100vh-8rem)] overflow-auto">
-                <ul className="pb-8">
+            <ScrollArea
+              className="h-[calc(100vh-8rem)]"
+              children={
+                // <div className="h-[calc(100vh-8rem)] overflow-auto">
+                // divide-y is border settings of <li> in tailwindcss
+                <ul className="pb-8 divide-y divide-gray-200">
                   {[...blogs]
                     .sort((blogA, blogB) => blogB.likes - blogA.likes)
                     .map(blog => (
@@ -229,9 +259,29 @@ export default function Dashboard() {
                       />
                     ))}
                 </ul>
-              // </div>
-            } />
+                // </div>
+              } />
 
+            {/* floating action button here when on small size screen*/}
+            <button
+              onClick={() => { setShowPostModal(true) }}
+              className="z-10 fixed bottom-8 right-4 flex items-center rounded-full md:hidden border border-black bg-black px-4 py-4 whitespace-nowrap text-sm text-white transition-colors hover:bg-white hover:text-black" 
+            >
+              <SquarePen size={20} />
+            </button>
+
+            <Modal showModal={showPostModal} setShowModal={setShowPostModal}>
+              <div className="w-full overflow-hidden md:max-w-md md:rounded-2xl md:border md:border-gray-100 ">
+                <div className="flex flex-col items-center justify-center space-y-3 bg-white px-4 pb-6 pt-20 text-center md:px-16">
+                  <h3 className="font-display text-2xl font-bold">Post New Link</h3>
+                    <div className="relative flex justify-center mt-10">
+                      <AddBlogForm
+                        opAfterSubmit={addBlog} // do operation after form on submit
+                      />
+                    </div>
+                </div>
+              </div>
+            </Modal>
           </div>
         </div>
       </div>
@@ -239,42 +289,55 @@ export default function Dashboard() {
       {/* <Notification message={msg} /> */}
 
       {/* -Right Sidebar */}
-      <div className="hidden w-[350px] shrink-0 overflow-auto bg-neutral-50 p-6 sm:flex">
-        <div className="max-w-md">
+      <div className="hidden w-1/3  min-w-[300px] md:flex flex-col shrink-0 grow-0 space-x-2 overflow-auto bg-neutral-50 p-6 ">
+        {/* <div className="max-w-md"> */}
 
-          <h3 className="justify-self-end text-2xl font-bold">
+        <h1 className="justify-self-end flex items-center space-x-1 text-xl font-bold">
+          <User size={30} />
+          <span>
             {user ? user.name : "Guest"}
-            {user ?
-              <button type="button" onClick={handleLogout} className="mx-auto ml-2 inline-flex items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
-                Sign out
-              </button>
-              : ""}
-          </h3>
+          </span>
+        </h1>
 
-          <div className="mt-9">
 
-            <Togglable btnLabel={"create new blog"} ref={togglableBlogFormRef}>
-              <button onClick={() => {
-                togglableBlogFormRef.current?.toggleVisibility()
-              }}
-                className="mx-auto mb-2 inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
-                ×
-              </button>
-              <div className="flex justify-center">
-                <AddBlogForm
-                  opAfterSubmit={addBlog} // do operation after form on submit
-                />
+        {user ?
+          <button type="button" onClick={handleLogout} className="mt-9 mx-auto inline-flex items-center justify-center space-x-1 rounded-full border border-black bg-black px-5 py-2 whitespace-nowrap text-sm text-white transition-colors hover:bg-white hover:text-black">
+            <span className="pointer-events-none">
+              Sign out
+            </span>
+            <LogOut size={20} />
+          </button>
+          : ""}
 
-              </div>
+        <div className="mt-4">
+          <Togglable
+            btnLabelNode={
+              <>
+                <span>Post new link</span>
+                <SquarePen size={20} />
+              </>
+            }
+            ref={togglableBlogFormRef}
+          >
+            <button onClick={() => {
+              togglableBlogFormRef.current?.toggleVisibility()
+            }}
+              className="mx-auto mb-2 w-full inline-flex  items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
+              ×
+            </button>
 
-            </Togglable >
-
-          </div>
-
+            <div className="flex justify-center">
+              <AddBlogForm
+                opAfterSubmit={addBlog} // do operation after form on submit
+              />
+            </div>
+          </Togglable >
         </div>
+
+        {/* </div> */}
       </div>
 
 
-    </div>
+    </div >
   )
 }

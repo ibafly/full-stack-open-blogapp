@@ -7,7 +7,7 @@ export interface ToggleRef {
   toggleVisibility: () => void
 }
 
-const Togglable = forwardRef<ToggleRef, PropsWithChildren<{ btnLabel: string }>>(({ children, btnLabel }, ref) => {
+const Togglable = forwardRef<ToggleRef, PropsWithChildren<{ btnLabelNode: React.ReactNode  }>>(({ children, btnLabelNode }, ref) => {
   // const Togglable = React.forwardRef(({ children, btnLabel }, ref) => {
   const [visible, setVisible] = useState(false)
 
@@ -24,8 +24,8 @@ const Togglable = forwardRef<ToggleRef, PropsWithChildren<{ btnLabel: string }>>
 
   return (
     <div>
-      <button onClick={toggleVisibility} style={hideWhenVisible} className="mx-auto inline-flex w-full items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
-        {btnLabel}
+      <button onClick={toggleVisibility} style={hideWhenVisible} className="mx-auto w-full inline-flex items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black">
+        {btnLabelNode}
       </button>
       <div style={showWhenVisible}>{children}</div>
     </div>
@@ -33,7 +33,7 @@ const Togglable = forwardRef<ToggleRef, PropsWithChildren<{ btnLabel: string }>>
 })
 
 Togglable.propTypes = {
-  btnLabel: PropTypes.string.isRequired,
+  btnLabelNode: PropTypes.element.isRequired,
 }
 
 Togglable.displayName = "Togglable"

@@ -4,13 +4,13 @@ import Form from "@/components/shared/form"
 import React, { useState } from "react"
 
 export interface FormData {
-    title: string;
-    author: string;
-    url: string;
+  title: string;
+  author: string;
+  url: string;
 }
 
 export default function addBlogForm({ opAfterSubmit }: {
-    opAfterSubmit: (formData: FormData) => Promise<void>;
+  opAfterSubmit: (formData: FormData) => Promise<void>;
 }) {
   const [formData, setFormData] = useState<FormData>({
     title: "",
@@ -30,14 +30,26 @@ export default function addBlogForm({ opAfterSubmit }: {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    opAfterSubmit(formData) // async create blog
-    setFormData({
-      title: "",
-      author: "",
-      url: "",
-    })
-    setMsg(null)
-    setIsLoading(false)
+    setIsLoading(true)
+
+    try {
+
+      await opAfterSubmit(formData) // async create blog
+    } catch (excep) {
+
+      setMsg(excep instanceof Error ? excep.message : "unknown error")
+      setTimeout(() => {
+        setMsg(null)
+      }, 5000)
+    } finally {
+      setFormData({
+        title: "",
+        author: "",
+        url: "",
+      })
+      setIsLoading(false)
+    }
+
   }
 
   const fields = [
@@ -62,6 +74,6 @@ export default function addBlogForm({ opAfterSubmit }: {
   ]
 
   return (
-    <Form fields={fields} fireOnSubmit={handleSubmit} submitButtonText={"Create"} isLoading={isLoading} />
+    <Form fields={fields} fireOnSubmit={handleSubmit} submitButtonText={"Post"} isLoading={isLoading} />
   )
 }

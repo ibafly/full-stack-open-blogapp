@@ -39,11 +39,8 @@ export default function BlogEntry({
 
 
   return (
-    <li data-id={blog.id} className="flex items-center p-6 mx-8 border-b 
-     hover:bg-gradient-to-r 
-  hover:from-transparent 
-  hover:via-indigo-100 
-  hover:to-transparent
+    <li data-id={blog.id} className="flex items-center p-6 mx-8 
+    hover:bg-gray-100
     ">
       <div className="flex grow items-center overflow-hidden p-4">
         <div className="mr-4 w-[200px] shrink-0">

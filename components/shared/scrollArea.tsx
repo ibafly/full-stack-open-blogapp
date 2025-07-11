@@ -2,20 +2,20 @@
 
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
 
-const TAGS = Array.from({ length: 50 }).map(
-    (_, i, a) => `v1.2.0-beta.${a.length - i}`,
-);
+import { cn } from "@/lib/utils";
 
 
 export default function ScrollArea({
     children,
+    className
 
 }: {
     children?: React.ReactNode;
+    className?: string;
 }) {
     return (
-        <ScrollAreaPrimitive.Root type="hover" className="h-[calc(100vh-8rem)] overflow-hidden rounded">
-            <ScrollAreaPrimitive.Viewport className="size-full rounded" >
+        <ScrollAreaPrimitive.Root type="hover" className={cn("overflow-hidden rounded", className)}>
+            <ScrollAreaPrimitive.Viewport className="h-full rounded">
                 {children}
             </ScrollAreaPrimitive.Viewport>
             <ScrollAreaPrimitive.Scrollbar
